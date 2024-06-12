@@ -1,6 +1,13 @@
+import { Hono } from "hono";
 
-export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-		return new Response('Hello World!');
-	},
-};
+const app = new Hono();
+
+// signup route
+// login 
+// logout 
+// auth route
+
+
+
+
+export  default app;
