@@ -12,11 +12,9 @@ lerna-debug.log*
 
 report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
-# env variables
+# 
 .env
-.wrangler
 wrangler.toml
-node_modules
 
 
 # Runtime data

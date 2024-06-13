@@ -1,41 +1,42 @@
 
 
 generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  directUrl =  env("DIRECT_URL")
-}
-
-model User{
-   id Int @unique @default(autoincrement())
-   name String
-   email String @unique
-   password String
-   blogs  Blogs[]
-}
-
-model Blogs {
-  id Int  @default(autoincrement()) @id
-  title String
-  imageUrl  String?
-  description String
-  Blogid Int    // foreign key declared 
-  // relation build here 
-  author User? @relation(fields: [Blogid],references: [id])
-  publishedDate DateTime @default(now())
-  comment  Comment[]
-}
-
-
-model Comment {
-   id Int @default(autoincrement()) @id
-   content String
-   createdAt DateTime @default(now())
-
-   userid Int   // frgn key
-   commentuser Blogs? @relation(fields: [userid] , references: [id])
-}
+	provider = "prisma-client-js"
+  }
+  
+	// url      = env("DATABASE_URL")
+	// directUrl =  env("DIRECT_URL")
+  datasource db {
+	provider = "postgresql"
+  url = env("DIRECT_URL")
+  }
+  
+  model User{
+	 id Int @unique @default(autoincrement())
+	 name String
+	 email String @unique
+	 password String
+	 blogs  Blogs[]
+  }
+  
+  model Blogs {
+	id Int  @default(autoincrement()) @id
+	title String
+	imageUrl  String?
+	description String
+	Blogid Int    // foreign key declared 
+	// relation build here 
+	author User? @relation(fields: [Blogid],references: [id])
+	publishedDate DateTime @default(now())
+	comment  Comment[]
+  }
+  
+  
+  model Comment {
+	 id Int @default(autoincrement()) @id
+	 content String
+	 createdAt DateTime @default(now())
+  
+	 userid Int   // frgn key
+	 commentuser Blogs? @relation(fields: [userid] , references: [id])
+  }
