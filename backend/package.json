@@ -21,6 +21,7 @@
     "@prisma/extension-accelerate": "^1.1.0",
     "@types/node": "^20.14.2",
     "hono": "^4.4.5",
-    "prisma": "^5.15.0"
+    "prisma": "^5.15.0",
+    "zod": "^3.23.8"
   }
 }
