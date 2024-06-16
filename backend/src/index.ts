@@ -29,8 +29,6 @@ app.post('/signup' , async(c) => {
 	 }).$extends(withAccelerate());
 
 	const Body = await c.req.json();
-	console.log('Body =',Body);
-
 	const ParsedResponse = UserSignup.safeParse(Body);
 	
 	if(!ParsedResponse.success){
@@ -41,7 +39,6 @@ app.post('/signup' , async(c) => {
 		return;
 	}
 
-
 	const response = await prisma.user.create({
 		 data : {
 			name :ParsedResponse?.data?.name , 
@@ -50,20 +47,12 @@ app.post('/signup' , async(c) => {
 		 }
 	})
 
-	// create token 
 	const privatekey = c.env.PRIVATE_KEY;
 	console.log('key is=',privatekey);
 
-	const token = await sign({
-		sub : Body?.name,
-		exp : Date.now() + 60 * 5
-	}, privatekey);
+	const token = await sign({ id : response?.id }, privatekey);
 	console.log('token is ==',token);
-
-	return c.json({
-		msg:"User Signed Up",
-		response
-	});
+	return c.json({msg:"User Signed Up",response});
 
 })
 
@@ -77,11 +66,10 @@ app.post('/login' , async(c) => {
 	const ParsedResponse = UserValidation.safeParse(Body);
 		
 	if(!ParsedResponse.success){
-		c.json({
+		return c.json({
 		   msg : "You sent the wrong inputs",
 		   errors: ParsedResponse.error.issues
 	   })
-	   return;
     }
 
 	const FindUser = await prisma.user.findUnique({
@@ -90,7 +78,14 @@ app.post('/login' , async(c) => {
 		}
 	})
 
+	if(!FindUser){ return c.json({ msg: "User Not Existed"})}
+
 	console.log('findUser',FindUser);
+	const privatekey = c.env.PRIVATE_KEY;
+	
+	const token = await sign({ id : FindUser?.id }, privatekey);
+	console.log('token is ==',token);
+	return c.json({msg:"User Logged In",FindUser});
 
 })
 
