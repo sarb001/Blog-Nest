@@ -4,13 +4,19 @@ import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { env } from "hono/adapter";
 import { sign  } from 'hono/jwt' ;
-import { UserValidation } from '../types';
+import { UserSignup , UserValidation } from '../types';
 
-const app = new Hono();
+type Bindingsts = {
+	DATABASE_URL :string,
+	PRIVATE_KEY : string
+}
+
+
+const app = new Hono<{Bindings : Bindingsts}>();
 
 app.get('/' , async(c) => {
-	const { DATABASE_URL }  = env<{  DATABASE_URL : string}>(c);
-	console.log('Databse URL1 =', DATABASE_URL);
+
+	console.log('Databse URL1 =', c.env.DATABASE_URL);
 
 	return c.text('Fetchign Yess All')
 })
@@ -18,16 +24,14 @@ app.get('/' , async(c) => {
 
 app.post('/signup' , async(c) => {
 
-	const { DATABASE_URL , PRIVATE_KEY }  = env<{  DATABASE_URL : string ,PRIVATE_KEY : string }>(c);
-	
 	const prisma = new   PrismaClient({
-		datasourceUrl : DATABASE_URL
+		datasourceUrl : c.env.DATABASE_URL
 	 }).$extends(withAccelerate());
 
 	const Body = await c.req.json();
 	console.log('Body =',Body);
 
-	const ParsedResponse = UserValidation.safeParse(Body);
+	const ParsedResponse = UserSignup.safeParse(Body);
 	
 	if(!ParsedResponse.success){
 	 	c.json({
@@ -47,7 +51,7 @@ app.post('/signup' , async(c) => {
 	})
 
 	// create token 
-	const privatekey = PRIVATE_KEY;
+	const privatekey = c.env.PRIVATE_KEY;
 	console.log('key is=',privatekey);
 
 	const token = await sign({
@@ -60,6 +64,33 @@ app.post('/signup' , async(c) => {
 		msg:"User Signed Up",
 		response
 	});
+
+})
+
+app.post('/login' , async(c) => {
+
+	const prisma = new   PrismaClient({
+		datasourceUrl : c.env.DATABASE_URL
+	 }).$extends(withAccelerate());
+
+	const Body = await c.req.json();		// => email password
+	const ParsedResponse = UserValidation.safeParse(Body);
+		
+	if(!ParsedResponse.success){
+		c.json({
+		   msg : "You sent the wrong inputs",
+		   errors: ParsedResponse.error.issues
+	   })
+	   return;
+    }
+
+	const FindUser = await prisma.user.findUnique({
+		where  : {
+			email : ParsedResponse?.data.email
+		}
+	})
+
+	console.log('findUser',FindUser);
 
 })
 
