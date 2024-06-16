@@ -3,7 +3,7 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { env } from "hono/adapter";
-import { sign  } from 'hono/jwt' ;
+import { sign ,verify } from 'hono/jwt' ;
 import { UserSignup , UserValidation } from '../types';
 
 type Bindingsts = {
@@ -14,8 +14,32 @@ type Bindingsts = {
 
 const app = new Hono<{Bindings : Bindingsts}>();
 
-app.get('/' , async(c) => {
+ async function middleware(c:any,next:any){
 
+	const jwt  = c.req.header('Authorization');
+	console.log('token is==',jwt);
+
+	if(!jwt){
+		return c.json({ msg: "UnAuthorized"})
+	}
+
+	const Privatekey = c.env.PRIVATE_KEY;
+	console.log('key is=',Privatekey);
+
+	const user = await verify(jwt,Privatekey);
+	console.log('user is =',user);
+	
+	if(!user){
+		return c.json({
+			msg : "User not Present"
+		})
+	}else{
+		c.set('userid',user?.id)
+		next();
+	}
+}
+
+app.get('/' , middleware ,async(c) => {
 	console.log('Databse URL1 =', c.env.DATABASE_URL);
 
 	return c.text('Fetchign Yess All')
@@ -85,7 +109,7 @@ app.post('/login' , async(c) => {
 	
 	const token = await sign({ id : FindUser?.id }, privatekey);
 	console.log('token is ==',token);
-	return c.json({msg:"User Logged In",FindUser});
+	return c.json({token});
 
 })
 
