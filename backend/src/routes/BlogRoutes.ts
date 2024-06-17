@@ -59,25 +59,10 @@ BlogRouter.post('/createblog' , async(c) => {
 			description : ParsedResponse?.data.description,
 		}
 	});
-	return c.json({
-		msg: "Blog Post Created",
-		response
-	})
+	return c.json({response})
 
 })
 
-
-// Edit the Blog 
-BlogRouter.put('/' , async(c) => {
-    
-});
-
-// Delete the Blog Specifically  
-BlogRouter.delete('/' , async(c) => {
-    
-});
-
-// Get All Blogs
 BlogRouter.get('/bulk' , async(c) => {
 	const prisma = new  PrismaClient({
 		datasourceUrl : c.env.DATABASE_URL
@@ -91,3 +76,54 @@ BlogRouter.get('/bulk' , async(c) => {
 		AllBlogs
 	 })
 })
+
+// Edit the Blog 
+BlogRouter.put('/' , async(c) => {
+
+	const prisma = new  PrismaClient({
+		datasourceUrl : c.env.DATABASE_URL
+	 }).$extends(withAccelerate());
+
+	const Body = await c.req.json();
+	const ParsedResponse = BlogValidation.safeParse(Body);
+	console.log('Parsed Bodyis =',ParsedResponse);
+	
+	if(!ParsedResponse.success){
+	 	c.json({ msg : "You sent the wrong inputs", errors: ParsedResponse.error.issues})
+		return;
+	}
+
+	const updateblog = await prisma.blogs.update({
+		where : {
+			id : 2
+		},
+		data : {
+			title : ParsedResponse?.data?.title,
+			description : ParsedResponse?.data?.description,
+		}
+	});
+	console.log('updated user= ',updateblog);
+
+	return c.json({id : updateblog?.id})
+
+});
+
+// Fetch Single Blog 
+BlogRouter.get('/' , async(c) => {
+	const prisma = new  PrismaClient({
+		datasourceUrl : c.env.DATABASE_URL
+	 }).$extends(withAccelerate());
+
+	 const getUserID = c.get('jwtPayload');
+	 console.log('getUser =',getUserID);
+
+	const SpecificBlog = await prisma.blogs.findUnique({
+		where :{
+			id : 2
+		},
+	});
+
+	return c.json({SpecificBlog})
+
+});
+
