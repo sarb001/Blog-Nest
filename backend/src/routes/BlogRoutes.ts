@@ -35,11 +35,48 @@ BlogRouter.use('/*' , async(c,next) => {
 		})
 	}else{
         c.set("jwtPayload",user?.id)
-		next();
+		return next();
 	}
 })
 
+BlogRouter.post('/createblog' , async(c) => {
+	const prisma = new  PrismaClient({
+		datasourceUrl : c.env.DATABASE_URL
+	 }).$extends(withAccelerate());
 
+	 const getUserID = c.get('jwtPayload');
+	 console.log('getUser =',getUserID);
+
+	const Body = await c.req.json();
+	const ParsedResponse = BlogValidation.safeParse(Body);
+	
+	if(!ParsedResponse.success){
+	 	c.json({
+			msg : "You sent the wrong inputs",
+			errors: ParsedResponse.error.issues
+		})
+		return;
+	}
+
+	const response = await prisma.blogs.create({
+		data : {
+			Blogid: 5,
+			title : ParsedResponse?.data.title,
+			description : ParsedResponse?.data.description,
+		}
+	});
+
+	console.log('response =',response);
+
+	return c.json({
+		msg: "Blog Post Created",
+		response
+	})
+
+})
+
+
+BlogRouter
 
 
 // Edit the Blog 

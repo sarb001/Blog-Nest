@@ -23,9 +23,10 @@ generator client {
 	title String
 	imageUrl  String?
 	description String
-	authorid Int    // foreign key declared 
+	Blogid Int
+	// Blogid Int    // foreign key declared 
 	// relation build here 
-	author User? @relation(fields: [authorid],references: [id])
+	author User? @relation(fields: [Blogid],references: [id])
 	publishedDate DateTime @default(now())
 	comment  Comment[] 
   }
