@@ -14,7 +14,7 @@ export const BlogRouter = new Hono<{
     }
 }>();
 
-
+// Middleware 
 BlogRouter.use('/*' , async(c,next) => {
     const jwt  = c.req.header('Authorization');
 	console.log('token is==',jwt);
@@ -41,8 +41,8 @@ BlogRouter.post('/createblog' , async(c) => {
 		datasourceUrl : c.env.DATABASE_URL
 	 }).$extends(withAccelerate());
 
-	 const getUserID = c.get('jwtPayload');
-	 console.log('getUser =',getUserID);
+	 const userid = c.get('jwtPayload');
+	 console.log('getUserid =',userid);
 
 	const Body = await c.req.json();
 	const ParsedResponse = BlogValidation.safeParse(Body);
@@ -54,7 +54,7 @@ BlogRouter.post('/createblog' , async(c) => {
 
 	const response = await prisma.blogs.create({
 		data : {
-			Blogid: 5,
+			Blogid: userid,
 			title : ParsedResponse?.data.title,
 			description : ParsedResponse?.data.description,
 		}
@@ -95,7 +95,7 @@ BlogRouter.put('/' , async(c) => {
 
 	const updateblog = await prisma.blogs.update({
 		where : {
-			id : 2
+			id : Body?.id
 		},
 		data : {
 			title : ParsedResponse?.data?.title,
@@ -110,7 +110,7 @@ BlogRouter.put('/' , async(c) => {
 
 // Fetch Single Blog 
 BlogRouter.get('/:id' , async(c) => {
-	const Userid = await c.req.param('id');
+	const Userid =  c.req.param('id');
 	console.log('userid =',Userid);
 	const prisma = new  PrismaClient({
 		datasourceUrl : c.env.DATABASE_URL
