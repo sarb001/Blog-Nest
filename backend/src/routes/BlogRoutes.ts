@@ -24,10 +24,7 @@ BlogRouter.use('/*' , async(c,next) => {
 	}
 
 	const Privatekey = c.env.PRIVATE_KEY;
-	console.log('key is=',Privatekey);
-
 	const user = await verify(jwt,Privatekey);
-	console.log('user is =',user);
 	
 	if(!user){
 		return c.json({
@@ -51,10 +48,7 @@ BlogRouter.post('/createblog' , async(c) => {
 	const ParsedResponse = BlogValidation.safeParse(Body);
 	
 	if(!ParsedResponse.success){
-	 	c.json({
-			msg : "You sent the wrong inputs",
-			errors: ParsedResponse.error.issues
-		})
+	 	c.json({ msg : "You sent the wrong inputs", errors: ParsedResponse.error.issues})
 		return;
 	}
 
@@ -65,9 +59,6 @@ BlogRouter.post('/createblog' , async(c) => {
 			description : ParsedResponse?.data.description,
 		}
 	});
-
-	console.log('response =',response);
-
 	return c.json({
 		msg: "Blog Post Created",
 		response
@@ -76,20 +67,27 @@ BlogRouter.post('/createblog' , async(c) => {
 })
 
 
-BlogRouter
-
-
 // Edit the Blog 
 BlogRouter.put('/' , async(c) => {
     
 });
 
 // Delete the Blog Specifically  
-BlogRouter.put('/' , async(c) => {
+BlogRouter.delete('/' , async(c) => {
     
 });
 
 // Get All Blogs
 BlogRouter.get('/bulk' , async(c) => {
+	const prisma = new  PrismaClient({
+		datasourceUrl : c.env.DATABASE_URL
+	 }).$extends(withAccelerate());
 
+	 const AllBlogs = await prisma.blogs.findMany({});
+	 console.log('all Blogs =',AllBlogs);
+
+	 return c.json({
+		msg: "All Blogs  Fetched",
+		AllBlogs
+	 })
 })
