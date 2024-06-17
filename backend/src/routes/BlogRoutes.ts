@@ -109,17 +109,16 @@ BlogRouter.put('/' , async(c) => {
 });
 
 // Fetch Single Blog 
-BlogRouter.get('/' , async(c) => {
+BlogRouter.get('/:id' , async(c) => {
+	const Userid = await c.req.param('id');
+	console.log('userid =',Userid);
 	const prisma = new  PrismaClient({
 		datasourceUrl : c.env.DATABASE_URL
 	 }).$extends(withAccelerate());
 
-	 const getUserID = c.get('jwtPayload');
-	 console.log('getUser =',getUserID);
-
 	const SpecificBlog = await prisma.blogs.findUnique({
 		where :{
-			id : 2
+			id : Number(Userid)
 		},
 	});
 
