@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { UserSignup , UserValidation } from '../../types';
+import { UserSignup , UserValidation } from 'common-types-users';
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { PrismaClient } from "@prisma/client/edge";
 import { env } from "hono/adapter";

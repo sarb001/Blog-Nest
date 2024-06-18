@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client/edge';
 import { Hono } from 'hono';
-import { BlogValidation, UserSignup , UserValidation } from '../../types';
+import { BlogValidation, UserSignup , UserValidation } from 'common-types-users';
 import { verify } from 'hono/jwt';
 import { withAccelerate } from '@prisma/extension-accelerate';
  
