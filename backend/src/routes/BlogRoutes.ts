@@ -25,6 +25,7 @@ BlogRouter.use('/*' , async(c,next) => {
 
 	const Privatekey = c.env.PRIVATE_KEY;
 	const user = await verify(jwt,Privatekey);
+	console.log('user is =',user);
 	
 	if(!user){
 		return c.json({
