@@ -1,6 +1,8 @@
-import { ChangeEvent, ReactElement, useState } from 'react';
+import { ChangeEvent  , useState } from 'react';
 import  { Link } from 'react-router-dom' ;
 import { SignupInput  } from 'common-types-users' ;
+import axios from 'axios' ;
+import { BACKEND_URL } from '../config';
 
 const Signup = () => {
 
@@ -10,9 +12,20 @@ const Signup = () => {
         password : ''
     })
 
-    const signuphandler = () => {
+    const signuphandler = async() => {
         console.log("inside");
         console.log('==',postinputs.name,postinputs.email,postinputs.password);
+
+        if(postinputs.email != '' || postinputs.name != '' || postinputs.password != ''){
+            const res = await axios.post(`${BACKEND_URL}/api/v1/user/signup` , {
+                postinputs
+            })
+            
+            console.log('res= ',res);
+            alert('Account Created');
+        }else{
+            alert('Fill All the Fields');
+        }
 
     }
     
