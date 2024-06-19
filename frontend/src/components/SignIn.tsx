@@ -21,6 +21,7 @@ const SignIn = () => {
         const res = await axios.post(`${BACKEND_URL}/api/v1/user/login` , postinputs);
         console.log('res =',res);
 
+        localStorage.setItem('token',res.data.token);
         navigate('/blogs');
         alert(' Loggedin Successfully ');
     }

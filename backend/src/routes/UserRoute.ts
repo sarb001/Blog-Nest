@@ -77,6 +77,8 @@ userRouter.post('/login' , async(c) => {
 	
 	const token = await sign({ id : FindUser?.id }, privatekey);
 	console.log('token is ==',token);
-	return c.json({token});
+	return c.json({
+		token  : token
+	});
 
 })
