@@ -117,13 +117,15 @@ BlogRouter.get('/:id' , async(c) => {
 		datasourceUrl : c.env.DATABASE_URL
 	 }).$extends(withAccelerate());
 
-	const SpecificBlog = await prisma.blogs.findUnique({
+	const blog = await prisma.blogs.findUnique({
 		where :{
 			id : Number(Userid)
 		},
 	});
 
-	return c.json({SpecificBlog})
+	return c.json({
+		blog : blog
+	})
 
 });
 
