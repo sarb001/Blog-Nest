@@ -18,43 +18,46 @@ const SignIn = () => {
 
     
   return (
-    <>
-     <div>
-          <div>  Login Now </div>
-          <div>
-                <span> Create New Account  </span>
-                <Link to = "/signup"> Signup  </Link>
-          </div>
+    <div style = {{margin:'5%',width:'30%'}}>
 
-          <div>
-              <div>  
-                 <LabelInputs label = "email" placeholder = "amandeep@gmail.com" 
-                 value = {postinputs.email}  onChange = {(e) => {
-                    setpostinputs(c => ({
-                        ...c,
-                        email :e.target.value
-                    }))
-                }}  /> 
-              </div>
+        <div style = {{display:'flex' ,flexDirection:'column',justifyContent:'space-between',padding:'14% 6%' ,backgroundColor:'lightgrey' , alignItems:'center' }}>
+            <div>  Login Now </div>
 
-             <div>  
-                <LabelInputs label = "password" placeholder = "amandeep"  
-                value = {postinputs.password} onChange = {(e) => {
-                    setpostinputs(c => ({
-                        ...c,
-                        password :e.target.value
-                    }))
-                }}  />  
-             </div>
-
-          </div>
-
-            <div>
-                <button onClick={loginhandler}> Login Now </button>
+            <div style = {{marginTop:'1%'}}>
+                    <span> Create New Account  </span>
+                    <Link to = "/signup"> Signup  </Link>
             </div>
 
-     </div>
-    </>
+            <div style = {{marginTop:'2%'}}>
+                <div  style = {{margin:'2% 0%'}} >  
+                    <LabelInputs label = "email" placeholder = "amandeep@gmail.com" 
+                    value = {postinputs.email}  onChange = {(e) => {
+                        setpostinputs(c => ({
+                            ...c,
+                            email :e.target.value
+                        }))
+                    }}  /> 
+                </div>
+
+                <div  style = {{margin:'2% 0%'}}>  
+                    <LabelInputs label = "password" placeholder = "amandeep"  
+                    value = {postinputs.password} onChange = {(e) => {
+                        setpostinputs(c => ({
+                            ...c,
+                            password :e.target.value
+                        }))
+                    }}  />  
+                </div>
+
+            </div>
+
+            <div style = {{marginTop:'3%'}}>
+                    <button style = {{padding:'1% 1%'}} onClick={loginhandler}> Login Now </button>
+            </div>
+
+        </div>
+
+    </div>
   )
 }
 
