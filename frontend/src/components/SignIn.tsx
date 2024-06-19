@@ -1,8 +1,9 @@
 
 import { ChangeEvent, ReactElement, useState } from 'react';
-import  { Link } from 'react-router-dom' ;
+import  { Link, useNavigate } from 'react-router-dom' ;
 import { SignInValidation  } from 'common-types-users' ;
-
+import axios from 'axios';
+import { BACKEND_URL } from '../config';
 
 const SignIn = () => {
 
@@ -11,9 +12,17 @@ const SignIn = () => {
         password : ''
     })
 
-    const loginhandler = () => {
+    const navigate = useNavigate();
+
+    const loginhandler = async() => {
         console.log("inside login");
         console.log('==',postinputs.email,postinputs.password);
+
+        const res = await axios.post(`${BACKEND_URL}/api/v1/user/login` , postinputs);
+        console.log('res =',res);
+
+        navigate('/blogs');
+        alert(' Loggedin Successfully ');
     }
 
     
