@@ -32,21 +32,30 @@ const SingleBlog = () => {
     },[id]);
 
   return (
-    <div style = {{padding:'4% 5%'}}>
+    <div style = {{padding:'4% 5%' ,display:'grid',gridTemplateColumns:'1fr 1fr'}}>
+
      <div>
             <div key = {id}>
              <h4> 
                 {singleblog && (
                     <>
                         <div key = {singleblog?.id}>
-                        <h3>  {singleblog?.title} </h3>    
+                            <div>
+                                <h1>  {singleblog?.title} </h1>    
+                                <h4> Posted on  {formatDate(singleblog?.publishedDate)} </h4>    
+                            </div>
                         <h3> {singleblog?.description} </h3>    
-                        <h3> Posted on  {formatDate(singleblog?.publishedDate)} </h3>    
                     </div>
                     </>
                 )}
             </h4>
             </div>
+     </div>
+
+     <div>
+         <h3> Author </h3>
+         <h2> James Singh </h2>
+         <h4> Master of mirth , funniest person in kingdom  </h4>
      </div>
     </div>
   )
