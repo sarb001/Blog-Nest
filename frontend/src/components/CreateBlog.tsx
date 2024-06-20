@@ -1,15 +1,29 @@
 import { ChangeEvent, ReactElement, useState } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import 'react-quill/dist/quill.snow.css'
+import axios from "axios";
+import { BACKEND_URL } from "../config";
 
 const CreateBlog = () => {
 
-    const [Title,setTitle] = useState('');
-    const [Description,setDescription] = useState('');
+    const [title,setTitle] = useState('');
+    const [description,setDescription] = useState('');
 
-     const handlepost = () => {
-        console.log('title===',Title);
-        console.log('Desc =',Description);
+     const handlepost = async() => {
+        console.log('title===',title);
+        console.log('Desc =',description);
+            const res =  await axios.post(`${BACKEND_URL}/api/v1/blog/createblog`, {
+                title,
+                description 
+            },{
+                headers : {
+                    'Authorization' : localStorage.getItem('token')
+                }
+            });
+            console.log('res =',res.data);
+            alert('Post Created');
+            setTitle('');
+            setDescription('');
      }
 
   return (
@@ -17,14 +31,14 @@ const CreateBlog = () => {
         <div>
             <label> Enter Title  </label>
             <input type = "text" placeholder="Enter Text..." 
-            value = {Title} onChange={(e) => setTitle(e.target.value)}
+            value = {title} onChange={(e) => setTitle(e.target.value)}
             />
         </div>
         <div>
             <ReactQuill 
                 modules = {module}
                 theme="snow" 
-                value={!Description ? '<br>' : `<p>${Description}</p>`} 
+                value={!description ? '<br>' : `<p>${description}</p>`} 
                 className="custom-quill"
                 onChange={(val: string) => {
                     setDescription(val?.replace(/<\/?p[^>]*>/g, '').replace('<br>', ''));
