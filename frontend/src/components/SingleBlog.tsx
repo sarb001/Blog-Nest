@@ -11,6 +11,9 @@ const SingleBlog = () => {
         title : string,
         description : string,
         publishedDate : string,
+        author : {
+            name : string
+        }
       }
       
     const [singleblog,setsingleblog] = useState<SingleBlog | null>(null);
@@ -54,7 +57,7 @@ const SingleBlog = () => {
 
      <div>
          <h3> Author </h3>
-         <h2> James Singh </h2>
+         <h3> {singleblog?.author?.name} </h3> 
          <h4> Master of mirth , funniest person in kingdom  </h4>
      </div>
     </div>

@@ -35,7 +35,11 @@ const Blogs = () => {
   interface Blog  {
      id:number,
      title : string,
-     description : string
+     description : string,
+     publishedDate: string,
+     author : {
+      name :string
+     }
    }
 
 
@@ -50,6 +54,8 @@ const Blogs = () => {
                id = {i?.id}
                 title = {i?.title}  
                 description = {i?.description}
+                publishedDate = {i?.publishedDate}
+                author = {i?.author}
               />
             </div>
          ))}
