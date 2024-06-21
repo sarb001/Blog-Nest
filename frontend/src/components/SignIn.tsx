@@ -21,12 +21,22 @@ const SignIn = () => {
         const res = await axios.post(`${BACKEND_URL}/api/v1/user/login` , postinputs);
         console.log('res =',res);
 
-        localStorage.setItem('token',res.data.token);
-        navigate('/blogs');
-        alert(' Loggedin Successfully ');
+        if(res.data.token){   
+            localStorage.setItem('token',res.data.token);
+            navigate('/blogs');
+            alert(' Loggedin Successfully ');
+        }else{
+            alert(' User not Existed ');
+        }
     }
 
-    
+    const Guestcredentials = () => {
+        setpostinputs({
+            email : 'guestcredentials@gmail.com',
+            password :'guestcredentials'
+        })
+    }
+
   return (
     <div style = {{margin:'5%',width:'30%'}}>
 
@@ -63,6 +73,12 @@ const SignIn = () => {
 
             <div style = {{marginTop:'3%'}}>
                     <button style = {{padding:'1% 1%'}} onClick={loginhandler}> Login Now </button>
+            </div>
+
+            <div style = {{marginTop:'3%'}}>
+                    <button style = {{padding:'1% 1%'}} onClick={Guestcredentials}> 
+                        Guest Credentials 
+                    </button>
             </div>
 
         </div>

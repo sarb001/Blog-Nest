@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Header = () => {
 
     const [session,setSession] = useState(() => 
-        localStorage.getItem('token') ? true : false
+        localStorage.getItem('token') !== null
     );
     const navigate = useNavigate();
 

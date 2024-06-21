@@ -3,7 +3,6 @@ import axios from 'axios';
 import BlogCard from './BlogCard';
 import { useEffect, useState } from 'react';
 import { BACKEND_URL } from '../config';
-import Header from './Header';
 
 const Blogs = () => {
 

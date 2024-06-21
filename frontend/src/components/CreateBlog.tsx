@@ -3,15 +3,20 @@ import ReactQuill  from "react-quill";
 import 'react-quill/dist/quill.snow.css'
 import axios from "axios";
 import { BACKEND_URL } from "../config";
+import { useNavigate } from "react-router-dom";
 
 const CreateBlog = () => {
 
     const [title,setTitle] = useState('');
     const [description,setDescription] = useState('');
+    const navigate = useNavigate();
+
+    const [loading,setloading] = useState(false);
 
      const handlepost = async() => {
         console.log('title===',title);
         console.log('Desc =',description);
+              setloading(true);
             const res =  await axios.post(`${BACKEND_URL}/api/v1/blog/createblog`, {
                 title,
                 description 
@@ -20,11 +25,14 @@ const CreateBlog = () => {
                     'Authorization' : localStorage.getItem('token')
                 }
             });
+            setloading(false);
             console.log('res =',res.data);
             alert('Post Created');
             setTitle('');
             setDescription('');
+            navigate('/blogs');
      }
+
 
   return (
     <div style = {{margin:'3%'}}> 
@@ -51,7 +59,9 @@ const CreateBlog = () => {
         <div style = {{margin:'3%'}}>
             <button style = {{padding:'1% 3%'}} 
              type = "submit" 
-             onClick={handlepost}> Publish Post </button>
+             onClick={handlepost}>
+                {loading ?  "Publishing...." : " Publish Post" } 
+              </button>
         </div>
     </div>
   )
