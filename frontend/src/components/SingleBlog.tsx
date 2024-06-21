@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { BACKEND_URL } from '../config';
 import { useEffect, useState } from 'react';
 
@@ -21,6 +21,8 @@ const SingleBlog = () => {
     const { id } = useParams<string>();
     console.log('id is -',typeof(id));
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         async function FetchsingleBlog() {   
             const res =  await axios.get(`${BACKEND_URL}/api/v1/blog/${id}`, {
@@ -34,10 +36,21 @@ const SingleBlog = () => {
         FetchsingleBlog();
     },[id]);
 
-    const DeleteBlog = (id:string) => {
-        console.log('blog id is=',id);
+    const DeleteBlog = async(id:string) => {
+        try {
+            console.log('Specifc User id is=',id);
+            const res =  await axios.delete(`${BACKEND_URL}/api/v1/blog/${id}`, {
+                headers : {
+                    'Authorization' : localStorage.getItem('token')
+                }
+            });
+            console.log('res =',res.data.blog);
+            alert('Blog Deleted');
+            navigate('/blogs');
+        } catch (error) {
+            alert('Not Autorized to Delete')
+        }
     }
-
 
   return (
 
@@ -65,7 +78,9 @@ const SingleBlog = () => {
          <h3> Author </h3>
          <h3> {singleblog?.author?.name} </h3> 
          <h4> Master of mirth , funniest person in kingdom  </h4>
-         { id && <button onClick={() => DeleteBlog(id)}> Delete </button> }
+         { id && <button 
+         style = {{padding:'3%'}}
+         onClick={() => DeleteBlog(id)}> Delete </button> }
      </div>
     </div>
   )
