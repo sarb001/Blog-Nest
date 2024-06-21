@@ -19,7 +19,7 @@ const Header = () => {
         <div style = {{display:'grid' ,gridTemplateColumns:'1fr 1fr' ,justifyContent:'space-between',margin:'2%'}}>
                 {session ? <>
                     <div>
-                      <Link to = "/"> Kagaaz </Link>
+                      <Link to = "/blogs"> Kagaaz </Link>
                      </div>
                 </> :
                 <div>

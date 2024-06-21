@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 const SingleBlog = () => {
 
      interface SingleBlog  {
-        id:number,
+        id: number  ,
         title : string,
         description : string,
         publishedDate : string,
@@ -18,8 +18,8 @@ const SingleBlog = () => {
       
     const [singleblog,setsingleblog] = useState<SingleBlog | null>(null);
 
-    const { id } = useParams();
-    console.log('id is =',id);
+    const { id } = useParams<string>();
+    console.log('id is -',typeof(id));
 
     useEffect(() => {
         async function FetchsingleBlog() {   
@@ -33,6 +33,11 @@ const SingleBlog = () => {
         }
         FetchsingleBlog();
     },[id]);
+
+    const DeleteBlog = (id:string) => {
+        console.log('blog id is=',id);
+    }
+
 
   return (
 
@@ -60,6 +65,7 @@ const SingleBlog = () => {
          <h3> Author </h3>
          <h3> {singleblog?.author?.name} </h3> 
          <h4> Master of mirth , funniest person in kingdom  </h4>
+         { id && <button onClick={() => DeleteBlog(id)}> Delete </button> }
      </div>
     </div>
   )
