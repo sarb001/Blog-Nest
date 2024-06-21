@@ -34,6 +34,7 @@ const CreateBlog = () => {
             value = {title} onChange={(e) => setTitle(e.target.value)}
             />
         </div>
+
         <div>
             <ReactQuill 
                 modules = {module}
@@ -46,6 +47,7 @@ const CreateBlog = () => {
                 placeholder="Write an article....."
                 />
         </div>
+        
         <div style = {{margin:'3%'}}>
             <button style = {{padding:'1% 3%'}} 
              type = "submit" 

@@ -1,16 +1,17 @@
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Signup from "./Signup";
 
 const Header = () => {
 
-    const [session,setSession] = useState(true);
+    const [session,setSession] = useState(() => 
+        localStorage.getItem('token') ? true : false
+    );
     const navigate = useNavigate();
 
     const logout = () => {
         localStorage.removeItem('token');
-        setSession(false);
+        setSession(!session);
         navigate('/signin');
     }
 

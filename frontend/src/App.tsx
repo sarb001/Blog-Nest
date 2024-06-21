@@ -5,6 +5,7 @@ import Home from "./components/Home"
 import Blogs from "./components/Blogs"
 import SingleBlog from "./components/SingleBlog"
 import CreateBlog from "./components/CreateBlog"
+import Header from "./components/Header"
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
   return (
       <>
       <BrowserRouter>
+      <Header />
          <Routes>
            <Route path="/" element = {<Home />}>  </Route>
            <Route path="/signup" element = {<Signup />}>  </Route>

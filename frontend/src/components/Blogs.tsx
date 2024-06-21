@@ -46,9 +46,6 @@ const Blogs = () => {
 
   return (
     <>
-    <div>
-      <Header />
-    </div>
     <div style = {{margin:'2%',display:'flex'}}>
       <h3> All Blogs  </h3>
       <div style = {{margin:'3%'}}>
