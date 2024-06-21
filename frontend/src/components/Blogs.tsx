@@ -3,6 +3,7 @@ import axios from 'axios';
 import BlogCard from './BlogCard';
 import { useEffect, useState } from 'react';
 import { BACKEND_URL } from '../config';
+import Header from './Header';
 
 const Blogs = () => {
 
@@ -45,6 +46,9 @@ const Blogs = () => {
 
   return (
     <>
+    <div>
+      <Header />
+    </div>
     <div style = {{margin:'2%',display:'flex'}}>
       <h3> All Blogs  </h3>
       <div style = {{margin:'3%'}}>

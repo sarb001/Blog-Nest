@@ -35,8 +35,9 @@ const SingleBlog = () => {
     },[id]);
 
   return (
-    <div style = {{padding:'4% 5%' ,display:'grid',gridTemplateColumns:'1fr 1fr'}}>
 
+    <div style = {{padding:'4% 5%' ,display:'grid',gridTemplateColumns:'1fr 1fr'}}>
+        
      <div>
             <div key = {id}>
              <h4> 
