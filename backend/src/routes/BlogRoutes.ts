@@ -156,3 +156,54 @@ BlogRouter.get('/:id' , async(c) => {
 
 });
 
+// Delete the Blog Specific  Npw 
+BlogRouter.delete('/:id' , async(c) => {
+	const Userid =  c.req.param('id');
+	console.log('userid =',Userid);
+
+	const userid = c.get('jwtPayload');
+	console.log('getUserid =',userid);
+
+	const prisma = new  PrismaClient({
+		datasourceUrl : c.env.DATABASE_URL
+	 }).$extends(withAccelerate());
+
+	 try {
+	
+		const blog = await prisma.blogs.delete({
+			where :{
+				id : Number(Userid)
+			},
+			select: {
+				id : true,
+				title : true,
+				imageUrl : true,
+				description : true,
+				Blogid : true,
+				publishedDate : true,
+				author: {
+					select: {
+						name :true,
+						id : true
+					}
+				}
+			}
+		});
+
+	 console.log('blog is ==',blog);
+	 if(blog?.author?.id === userid){
+		return c.json({
+			blog : blog,
+			msg : "Authoried to  Delete Post"
+		})
+	 }else{
+		 return c.json({
+			msg : "Not Authoried to  Delete Post"
+		 })
+	 }
+	 	
+	} catch (error) {
+			console.log('error while Deleting =',error);
+	}
+
+});
