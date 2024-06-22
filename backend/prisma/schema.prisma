@@ -1,42 +1,50 @@
 
 
-generator client {
-	provider = "prisma-client-js"
-  }
+// generator client {
+// 	provider = "prisma-client-js"
+//   }
+//     //  url     = env("DATABASE_URL")
+// 	// directUrl =  env("DIRECT_URL")
+// 	// directUrl = env("DIRECT_URL")
   
   datasource db {
 	provider = "postgresql"
-     url     = env("DATABASE_URL")
-	directUrl =  env("DIRECT_URL")
+	  url     = env("DIRECT_URL")
   }
-  
-  model User{
-	 id Int @unique @default(autoincrement())
-	 name String
-	 email String @unique
-	 password String
-	 blogs  Blogs[]
-  }
-  
-  model Blogs {
-	id Int  @default(autoincrement()) @id
-	title String
-	imageUrl  String?
-	description String
-	Blogid Int
-	// Blogid Int    // foreign key declared 
-	// relation build here 
-	author User? @relation(fields: [Blogid],references: [id])
-	publishedDate DateTime @default(now())
-	comment  Comment[] 
-  }
-  
-  
-  model Comment {
-	 id Int @default(autoincrement()) 
-	 content String
-	 createdAt DateTime @default(now())
-  
-	 userid Int  @unique // frgn key
-	 commentuser Blogs? @relation(fields: [userid] , references: [id])
-  }
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    @unique
+  password  String
+  posts     Post[]		// array of posts - 1 user means can have many posts
+  comments  Comment[]
+}
+
+model Post {
+  id          Int       @id @default(autoincrement())
+  title       String
+  imageUrl  String?
+  description String
+  publishedDate DateTime @default(now())
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+  comments    Comment[]  // can have many comments
+}
+
+model Comment {
+  id      Int   @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  content String
+
+  postId  Int 
+  post    Post  @relation(fields: [postId], references: [id])
+
+  userId  Int		// f key 
+  //   show  relation  
+  user    User  @relation(fields: [userId], references: [id])
+}

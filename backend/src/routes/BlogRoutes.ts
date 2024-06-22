@@ -75,6 +75,7 @@ BlogRouter.get('/bulk' , async(c) => {
 				title : true,
 				imageUrl : true,
 				description : true,
+				comment : true,
 				Blogid : true,
 				publishedDate : true,
 				author :{
@@ -207,3 +208,72 @@ BlogRouter.delete('/:id' , async(c) => {
 	}
 
 });
+
+
+// Post Comment to  Specific Blog 
+BlogRouter.post('/comment/:id' , async(c) => {
+	try {
+		// find  user's blog 
+		const userid =  c.req.param('id');
+		console.log('useriddddd =',userid);
+
+		const Insertedcomment = await c.req.json();
+		console.log('comment is =',Insertedcomment);
+
+		const prisma = new  PrismaClient({
+			datasourceUrl : c.env.DATABASE_URL
+		 }).$extends(withAccelerate());	
+	
+		
+		const maincomment = await prisma.comment.create({
+				data : {
+					content : Insertedcomment?.content,
+					userid  : Number(userid)
+				}
+		})
+		console.log('comment datas =',maincomment);
+
+		//add comment by logged in ( with token)
+	} catch (error) {
+		console.log(' post error = ',error);
+	}
+})
+
+
+// Get All Comment to  Specific Blog 
+
+BlogRouter.get('/comment/:id' , async(c) => {
+	try {
+
+		const paramsid =  c.req.param('id');	// specific blog 
+		console.log('userid =',paramsid);
+
+		const prisma = new  PrismaClient({
+			datasourceUrl : c.env.DATABASE_URL
+		 }).$extends(withAccelerate());	
+	
+		const SpecificComment = await prisma.blogs.findMany({
+			where :{
+				id : Number(paramsid)		// blog id
+			},
+			select: {
+				publishedDate : true,
+				comment : true,
+				author: {
+					select: {
+						name :true			// author name 
+					}
+				}
+			}
+		});
+
+		console.log('Blogs Comment  =',SpecificComment);
+		return c.json({
+			msg : "Specific Comments ",
+			SpecificComment
+		})
+
+	} catch (error) {
+		console.log(' post error = ',error);
+	}
+})
