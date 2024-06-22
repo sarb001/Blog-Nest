@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom'
 import { BACKEND_URL } from '../config';
 import { useEffect, useState } from 'react';
+import WriteComment from './WriteComment';
 
 const SingleBlog = () => {
 
@@ -72,6 +73,10 @@ const SingleBlog = () => {
                 )}
             </h4>
             </div>
+
+            <div>
+                <WriteComment />
+            </div>
      </div>
 
      <div>
@@ -82,6 +87,8 @@ const SingleBlog = () => {
          style = {{padding:'3%'}}
          onClick={() => DeleteBlog(id)}> Delete </button> }
      </div>
+
+     
     </div>
   )
 }
