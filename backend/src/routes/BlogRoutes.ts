@@ -53,9 +53,9 @@ BlogRouter.post('/createblog' , async(c) => {
 		return;
 	}
 
-	const response = await prisma.blogs.create({
+	const response = await prisma.post.create({
 		data : {
-			Blogid: userid,
+			userId: userid,
 			title : ParsedResponse?.data.title,
 			description : ParsedResponse?.data.description,
 		}
@@ -69,16 +69,15 @@ BlogRouter.get('/bulk' , async(c) => {
 		datasourceUrl : c.env.DATABASE_URL
 	 }).$extends(withAccelerate());
 
-	 const AllBlogs = await prisma.blogs.findMany({
+	 const AllBlogs = await prisma.post.findMany({
 			select : {
 				id : true,
 				title : true,
 				imageUrl : true,
 				description : true,
-				comment : true,
-				Blogid : true,
+				userId : true,
 				publishedDate : true,
-				author :{
+				user :{
 					select : {
 						name :true
 					}
@@ -92,6 +91,9 @@ BlogRouter.get('/bulk' , async(c) => {
 		AllBlogs
 	 })
 })
+
+
+
 
 // Edit the Blog 
 BlogRouter.put('/' , async(c) => {
@@ -109,7 +111,7 @@ BlogRouter.put('/' , async(c) => {
 		return;
 	}
 
-	const updateblog = await prisma.blogs.update({
+	const updateblog = await prisma.post.update({
 		where : {
 			id : Body?.id
 		},
@@ -132,7 +134,7 @@ BlogRouter.get('/:id' , async(c) => {
 		datasourceUrl : c.env.DATABASE_URL
 	 }).$extends(withAccelerate());
 
-	const blog = await prisma.blogs.findUnique({
+	const blog = await prisma.post.findUnique({
 		where :{
 			id : Number(Userid)
 		},
@@ -141,9 +143,9 @@ BlogRouter.get('/:id' , async(c) => {
 			title : true,
 			imageUrl : true,
 			description : true,
-			Blogid : true,
+			userId : true,
 			publishedDate : true,
-			author: {
+			user: {
 				select: {
 					name :true
 				}
@@ -159,8 +161,8 @@ BlogRouter.get('/:id' , async(c) => {
 
 // Delete the Blog Specific  Npw 
 BlogRouter.delete('/:id' , async(c) => {
-	const Userid =  c.req.param('id');
-	console.log('userid =',Userid);
+	const Blogid =  c.req.param('id');
+	console.log('Blogid here =',Blogid);
 
 	const userid = c.get('jwtPayload');
 	console.log('getUserid =',userid);
@@ -169,39 +171,42 @@ BlogRouter.delete('/:id' , async(c) => {
 		datasourceUrl : c.env.DATABASE_URL
 	 }).$extends(withAccelerate());
 
-	 try {
-	
-		const blog = await prisma.blogs.delete({
-			where :{
-				id : Number(Userid)
-			},
-			select: {
-				id : true,
-				title : true,
-				imageUrl : true,
-				description : true,
-				Blogid : true,
-				publishedDate : true,
-				author: {
-					select: {
-						name :true,
-						id : true
-					}
-				}
-			}
-		});
+		try {
 
-	 console.log('blog is ==',blog);
-	 if(blog?.author?.id === userid){
+			const blog = await prisma.post.findUnique({
+					where :{
+						id : Number(Blogid)
+					},
+					select: {
+						user: {
+							select: {
+								id : true
+							}
+						}
+					}
+			});
+
+  		console.log('Unique blog is ==',blog);
+
+		//16 === 
+		if(blog?.user.id === userid){			 // logged user == same uploader
+			
+		const blog = await prisma.post.delete({
+				where :{
+					id : Number(Blogid)
+				},
+		});
+		console.log('blog Deleted =',blog);
+
 		return c.json({
-			blog : blog,
-			msg : "Authoried to  Delete Post"
+				blog : blog,
+				msg : "Authoried to  Delete Post"
 		})
-	 }else{
-		 return c.json({
-			msg : "Not Authoried to  Delete Post"
-		 })
-	 }
+		}else{
+			return c.json({
+				msg : "Not Authoried to  Delete Post"
+			})
+		}
 	 	
 	} catch (error) {
 			console.log('error while Deleting =',error);
@@ -225,13 +230,13 @@ BlogRouter.post('/comment/:id' , async(c) => {
 		 }).$extends(withAccelerate());	
 	
 		
-		const maincomment = await prisma.comment.create({
-				data : {
-					content : Insertedcomment?.content,
-					userid  : Number(userid)
-				}
-		})
-		console.log('comment datas =',maincomment);
+		// const maincomment = await prisma.comment.create({
+		// 		data : {
+		// 			content : Insertedcomment?.content,
+		// 			// userId : Number(userid)
+		// 		}
+		// })
+		// console.log('comment datas =',maincomment);
 
 		//add comment by logged in ( with token)
 	} catch (error) {
@@ -252,14 +257,13 @@ BlogRouter.get('/comment/:id' , async(c) => {
 			datasourceUrl : c.env.DATABASE_URL
 		 }).$extends(withAccelerate());	
 	
-		const SpecificComment = await prisma.blogs.findMany({
+		const SpecificComment = await prisma.post.findMany({
 			where :{
 				id : Number(paramsid)		// blog id
 			},
 			select: {
 				publishedDate : true,
-				comment : true,
-				author: {
+				user: {
 					select: {
 						name :true			// author name 
 					}
