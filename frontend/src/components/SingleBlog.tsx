@@ -8,7 +8,7 @@ import WriteComment from './WriteComment';
 const SingleBlog = () => {
 
      interface SingleBlog  {
-        id: number  ,
+        id: number ,
         title : string,
         description : string,
         publishedDate : string,
@@ -18,8 +18,11 @@ const SingleBlog = () => {
       }
       
       interface Comments {
-        id : number | undefined,
-        content  :string
+        id : string | undefined
+        content  :string,
+        user : {
+            name :string
+        }
       }
 
       interface Allcomments {
@@ -31,7 +34,7 @@ const SingleBlog = () => {
     const [allcomment,setAllComments] = useState<Comments[]>([]);
 
     const { id } = useParams<string>();
-    console.log('id is -',typeof(id));
+    console.log('id isss -',typeof(id));
 
     const navigate = useNavigate();
 
@@ -97,17 +100,19 @@ const SingleBlog = () => {
                     </>
                 )}
             </h4>
+
             </div>
 
             <div>
-                <WriteComment />
+               { id && <WriteComment  postid = {id} />}
             </div>
             <div>
                 <h3> All Comments Here-  </h3>
                 <div>
                     {allcomment  && allcomment.map(i => (
                         <div key= {i?.id}>
-                            <h2> {i?.content} </h2>
+                            <h2> {i?.content} -- {i?.user?.name} 
+                            </h2>
                         </div>
                     ))}
                 </div>

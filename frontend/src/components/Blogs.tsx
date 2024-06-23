@@ -51,7 +51,7 @@ const Blogs = () => {
          {blog && blog?.map((i:Blog) => (
             <div key = {i?.id}>
               <BlogCard 
-               id = {i?.id}
+                id = {i?.id}
                 title = {i?.title}  
                 description = {i?.description}
                 publishedDate = {i?.publishedDate}
