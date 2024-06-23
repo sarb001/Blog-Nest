@@ -4,6 +4,7 @@ import 'react-quill/dist/quill.snow.css'
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 
 const CreateBlog = () => {
 
@@ -35,35 +36,38 @@ const CreateBlog = () => {
 
 
   return (
-    <div style = {{margin:'3%'}}> 
-        <div>
-            <label> Enter Title  </label>
-            <input type = "text" placeholder="Enter Text..." 
-            value = {title} onChange={(e) => setTitle(e.target.value)}
-            />
-        </div>
-
-        <div>
-            <ReactQuill 
-                modules = {module}
-                theme="snow" 
-                value={!description ? '<br>' : `<p>${description}</p>`} 
-                className="custom-quill"
-                onChange={(val: string) => {
-                    setDescription(val?.replace(/<\/?p[^>]*>/g, '').replace('<br>', ''));
-                  }}
-                placeholder="Write an article....."
+    <>
+     <Header />
+        <div style = {{margin:'3%'}}> 
+            <div>
+                <label> Enter Title  </label>
+                <input type = "text" placeholder="Enter Text..." 
+                value = {title} onChange={(e) => setTitle(e.target.value)}
                 />
+            </div>
+
+            <div>
+                <ReactQuill 
+                    modules = {module}
+                    theme="snow" 
+                    value={!description ? '<br>' : `<p>${description}</p>`} 
+                    className="custom-quill"
+                    onChange={(val: string) => {
+                        setDescription(val?.replace(/<\/?p[^>]*>/g, '').replace('<br>', ''));
+                    }}
+                    placeholder="Write an article....."
+                    />
+            </div>
+            
+            <div style = {{margin:'3%'}}>
+                <button style = {{padding:'1% 3%'}} 
+                type = "submit" 
+                onClick={handlepost}>
+                    {loading ?  "Publishing...." : " Publish Post" } 
+                </button>
+            </div>
         </div>
-        
-        <div style = {{margin:'3%'}}>
-            <button style = {{padding:'1% 3%'}} 
-             type = "submit" 
-             onClick={handlepost}>
-                {loading ?  "Publishing...." : " Publish Post" } 
-              </button>
-        </div>
-    </div>
+    </>
   )
 }
 

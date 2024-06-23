@@ -6,21 +6,21 @@ import { BACKEND_URL } from "../config";
 
 const Header = () => {
 
-    const [session,setSession] = useState(() => 
+    const [session,setSession] = useState(() =>             // true 
         localStorage.getItem('token') !== null
     );
+
     const navigate = useNavigate();
+    const [userProfile,setuserProfile] = useState<Profile | null>(null);
 
     interface Profile {
         name :string,
         email : string
     }
 
-    const [userProfile,setuserProfile] = useState<Profile | null>(null);
-
     const logout = () => {
         localStorage.removeItem('token');
-        setSession(!session);
+        setSession(false);
         navigate('/signin');
     }
 

@@ -13,6 +13,7 @@ interface Blog  {
 
 const BlogCard = ({id,title,description, publishedDate ,  user } :Blog) => {
   return (
+          
     <Link to = {`${id}`}  style = {{display:'grid',gridTemplateColumns:'1fr 1fr',padding:'5%',backgroundColor:'lightsalmon',margin:'6%',textDecoration:'none'}}>
           
             <div>
