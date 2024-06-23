@@ -5,13 +5,13 @@ interface Blog  {
   title : string,
   description : string,
   publishedDate: string,
-  author :{
+  user :{
     name : string
   }
 }
 
 
-const BlogCard = ({id,title,description, publishedDate ,  author } :Blog) => {
+const BlogCard = ({id,title,description, publishedDate ,  user } :Blog) => {
   return (
     <Link to = {`${id}`}  style = {{display:'grid',gridTemplateColumns:'1fr 1fr',padding:'5%',backgroundColor:'lightsalmon',margin:'6%',textDecoration:'none'}}>
           
@@ -22,7 +22,7 @@ const BlogCard = ({id,title,description, publishedDate ,  author } :Blog) => {
 
             <div>
               <h4> {FormatDate(publishedDate)} </h4>
-              <h3> {author?.name} </h3>
+              <h3> {user?.name} </h3>
             </div>
             
     </Link>

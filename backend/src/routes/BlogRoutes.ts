@@ -94,7 +94,6 @@ BlogRouter.get('/bulk' , async(c) => {
 
 
 
-
 // Edit the Blog 
 BlogRouter.put('/' , async(c) => {
 
@@ -172,23 +171,22 @@ BlogRouter.delete('/:id' , async(c) => {
 	 }).$extends(withAccelerate());
 
 		try {
-
-			const blog = await prisma.post.findUnique({
-					where :{
-						id : Number(Blogid)
-					},
-					select: {
-						user: {
-							select: {
-								id : true
+				const blog = await prisma.post.findUnique({
+						where :{
+							id : Number(Blogid)
+						},
+						select: {
+							user: {
+								select: {
+									id : true
+								}
 							}
 						}
-					}
-			});
+				});
 
-  		console.log('Unique blog is ==',blog);
+  	    if(!blog)return c.json({msg : " Blog not Found "})
 
-		//16 === 
+
 		if(blog?.user.id === userid){			 // logged user == same uploader
 			
 		const blog = await prisma.post.delete({
@@ -196,7 +194,6 @@ BlogRouter.delete('/:id' , async(c) => {
 					id : Number(Blogid)
 				},
 		});
-		console.log('blog Deleted =',blog);
 
 		return c.json({
 				blog : blog,
@@ -219,26 +216,32 @@ BlogRouter.delete('/:id' , async(c) => {
 BlogRouter.post('/comment/:id' , async(c) => {
 	try {
 		// find  user's blog 
-		const userid =  c.req.param('id');
-		console.log('useriddddd =',userid);
+		const postid =  c.req.param('id');				// 16  jasveer id 
+		console.log('postid iss =',postid);
 
-		const Insertedcomment = await c.req.json();
+		const Insertedcomment = await c.req.json();			// dferv
 		console.log('comment is =',Insertedcomment);
+
+		const userid = c.get('jwtPayload');
+		console.log('user id=',userid);
 
 		const prisma = new  PrismaClient({
 			datasourceUrl : c.env.DATABASE_URL
 		 }).$extends(withAccelerate());	
-	
 		
-		// const maincomment = await prisma.comment.create({
-		// 		data : {
-		// 			content : Insertedcomment?.content,
-		// 			// userId : Number(userid)
-		// 		}
-		// })
-		// console.log('comment datas =',maincomment);
+		const maincomment = await prisma.comment.create({
+				data : {
+					content : Insertedcomment?.content,
+					postId : Number(postid),
+					userId : Number(userid)
+				}
+		})
+		console.log('comment datas =',maincomment);
+		return c.json({
+			msg : "Comment On Post",
+			maincomment
+		})
 
-		//add comment by logged in ( with token)
 	} catch (error) {
 		console.log(' post error = ',error);
 	}
@@ -250,19 +253,22 @@ BlogRouter.post('/comment/:id' , async(c) => {
 BlogRouter.get('/comment/:id' , async(c) => {
 	try {
 
-		const paramsid =  c.req.param('id');	// specific blog 
-		console.log('userid =',paramsid);
+		const postid =  c.req.param('id');	// specific blog 
+		console.log('Params id =',postid);
+
+		const userid = c.get('jwtPayload');		// login id guest 
+		console.log('user id=',userid);
 
 		const prisma = new  PrismaClient({
 			datasourceUrl : c.env.DATABASE_URL
 		 }).$extends(withAccelerate());	
-	
-		const SpecificComment = await prisma.post.findMany({
+
+		const comment = await prisma.comment.findMany({
 			where :{
-				id : Number(paramsid)		// blog id
+				postId : Number(postid)		
 			},
 			select: {
-				publishedDate : true,
+				content : true,
 				user: {
 					select: {
 						name :true			// author name 
@@ -271,10 +277,9 @@ BlogRouter.get('/comment/:id' , async(c) => {
 			}
 		});
 
-		console.log('Blogs Comment  =',SpecificComment);
+		console.log('Blogs Comment  =',comment);
 		return c.json({
-			msg : "Specific Comments ",
-			SpecificComment
+			comment
 		})
 
 	} catch (error) {

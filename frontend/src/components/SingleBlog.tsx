@@ -12,12 +12,23 @@ const SingleBlog = () => {
         title : string,
         description : string,
         publishedDate : string,
-        author : {
+        user : {
             name : string
         }
       }
       
+      interface Comments {
+        id : number | undefined,
+        content  :string
+      }
+
+      interface Allcomments {
+         allcomm : Comments[]
+      }
+
     const [singleblog,setsingleblog] = useState<SingleBlog | null>(null);
+
+    const [allcomment,setAllComments] = useState<Comments[]>([]);
 
     const { id } = useParams<string>();
     console.log('id is -',typeof(id));
@@ -53,6 +64,20 @@ const SingleBlog = () => {
         }
     }
 
+    useEffect(() => {
+        async function GetAllComments(){
+            const res =  await axios.get(`${BACKEND_URL}/api/v1/blog/comment/${id}`, {
+                headers : {
+                    'Authorization' : localStorage.getItem('token')
+                }
+                });
+                setAllComments(res.data.comment);
+            console.log(' All Commentss =',res.data.comment);
+        }
+        GetAllComments();
+    },[])
+        
+
   return (
 
     <div style = {{padding:'4% 5%' ,display:'grid',gridTemplateColumns:'1fr 1fr'}}>
@@ -77,11 +102,21 @@ const SingleBlog = () => {
             <div>
                 <WriteComment />
             </div>
+            <div>
+                <h3> All Comments Here-  </h3>
+                <div>
+                    {allcomment  && allcomment.map(i => (
+                        <div key= {i?.id}>
+                            <h2> {i?.content} </h2>
+                        </div>
+                    ))}
+                </div>
+            </div>
      </div>
 
      <div>
          <h3> Author </h3>
-         <h3> {singleblog?.author?.name} </h3> 
+         <h3> {singleblog?.user?.name} </h3> 
          <h4> Master of mirth , funniest person in kingdom  </h4>
          { id && <button 
          style = {{padding:'3%'}}

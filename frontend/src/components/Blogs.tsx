@@ -37,7 +37,7 @@ const Blogs = () => {
      title : string,
      description : string,
      publishedDate: string,
-     author : {
+     user : {
       name :string
      }
    }
@@ -55,7 +55,7 @@ const Blogs = () => {
                 title = {i?.title}  
                 description = {i?.description}
                 publishedDate = {i?.publishedDate}
-                author = {i?.author}
+                user = {i?.user}
               />
             </div>
          ))}
