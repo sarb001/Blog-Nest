@@ -1,3 +1,4 @@
+
 import { Hono } from 'hono';
 import { UserSignup , UserValidation } from 'common-types-users';
 import { withAccelerate } from "@prisma/extension-accelerate";
@@ -81,4 +82,41 @@ userRouter.post('/login' , async(c) => {
 		token  : token
 	});
 
+})
+
+userRouter.get('/me' ,async(c) => {
+
+	const jwtheader = c.req.header("Authorization");
+	console.log('jwtheader =',jwtheader);
+
+	if(!jwtheader){
+		return c.json({ msg: "UnAuthorized"})
+	}
+
+	const user = await verify(jwtheader,c.env.PRIVATE_KEY);
+	console.log('user is =',user);
+
+	try {
+		const prisma = new  PrismaClient({
+			datasourceUrl : c.env.DATABASE_URL
+		 }).$extends(withAccelerate());
+
+		 const mainuser = await prisma.user.findUnique({
+				where : {
+					id : Number(user?.id)
+				},
+				select :{
+					email :true,
+					name : true
+				}
+		 })
+
+		 console.log('user profile =',mainuser);
+		 return c.json({
+			mainuser
+		 })
+
+	} catch (error) {	
+		console.log('error =',error);
+	}
 })
