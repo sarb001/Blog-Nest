@@ -1,8 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react"
 import { BACKEND_URL } from "../config";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
 
 interface writecomment {
   postid  : string
@@ -18,7 +16,7 @@ const WriteComment = ({postid}:writecomment) => {
         // comment on specifc blog  
         e.preventDefault();
         console.log('new comment-',newcomment);
-          const res =  await axios.post(`${BACKEND_URL}/api/v1/blog/comment/${postid}`,
+          const response =  await axios.post(`${BACKEND_URL}/api/v1/blog/comment/${postid}`,
              {  content : newcomment }, 
              {
               headers : {
@@ -27,7 +25,7 @@ const WriteComment = ({postid}:writecomment) => {
             });
             alert('Comment Posted');
             window.location.reload();
-          console.log(' All Commentss =',res.data.comment);
+            setnewcomment('');
       }
 
   return (
@@ -35,10 +33,13 @@ const WriteComment = ({postid}:writecomment) => {
         <h2> Comments </h2>
         <div>
             <form onSubmit={handleComment}>
-             <textarea placeholder='Write comment..' value = {newcomment}
+             <input style = {{padding:'2% 5%'}} type = "text"
+              placeholder='Write comment..' value = {newcomment}
              onChange  = {(e) => setnewcomment(e.target.value)}
-             >  </textarea>
+             >  </input>
+             <div>
              <button  style = {{padding:'1% 1%'}} type = "submit"> Comment </button>
+             </div>
             </form>
         </div>
     </div>
