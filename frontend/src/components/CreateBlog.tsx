@@ -5,22 +5,41 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../Firebaseconfig";
+import { v4 } from  'uuid' ;
 
 const CreateBlog = () => {
 
     const [title,setTitle] = useState('');
     const [description,setDescription] = useState('');
+    const [img,setImg] = useState(null);
+    const [showimg,setShowimg]= useState('/src/assets/default.png')
     const navigate = useNavigate();
 
     const [loading,setloading] = useState(false);
 
      const handlepost = async() => {
-        console.log('title===',title);
-        console.log('Desc =',description);
+
+        if(img == null) return ;
+        const spaceRef =  ref(storage,`/mainimages/${v4()}`);
+        console.log('ref is =',spaceRef);
+
+        await uploadBytes(spaceRef,img).then((c) => {
+            console.log('file uploaded Done');
+        })
+
+        const imgurl = await getDownloadURL(spaceRef);
+
+            console.log('title===',title);
+            console.log('Desc =',description);
+            console.log('url to upload  =',imgurl);
+
             setloading(true);
             const res =  await axios.post(`${BACKEND_URL}/api/v1/blog/createblog`, {
                 title,
-                description 
+                description,
+                 imageUrl : imgurl
             },{
                 headers : {
                     'Authorization' : localStorage.getItem('token')
@@ -33,6 +52,13 @@ const CreateBlog = () => {
             setDescription('');
             navigate('/blogs');
      }
+
+
+     const changenow = (e:any) => {
+    setImg(e.target.files[0]);
+    setShowimg(URL.createObjectURL(e.target.files[0]));
+     }
+
 
 
   return (
@@ -59,10 +85,27 @@ const CreateBlog = () => {
                     />
             </div>
             
+            <div>
+        <div style = {{margin :'4%'}}>
+                <label> Upload Image </label>
+                <input  type = "file" 
+                 onChange={(e) => changenow(e)}
+                />
+        </div>
+
+        <div>
+            <h3> Image is = </h3>
+        <div>
+            <img src = {showimg}
+            style = {{width:'15%',height:'10%',objectFit:'cover'}} />
+        </div>
+        </div>
+    </div>  
+
             <div style = {{margin:'3%'}}>
                 <button style = {{padding:'1% 3%'}} 
-                type = "submit" 
-                onClick={handlepost}>
+                type = "submit"  
+                 onClick={handlepost}>
                     {loading ?  "Publishing...." : " Publish Post" } 
                 </button>
             </div>

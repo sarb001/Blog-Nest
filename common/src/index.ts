@@ -15,6 +15,7 @@ export const UserValidation = zod.object({
 export const BlogValidation = zod.object({
      title  : zod.string() ,
      description : zod.string(),
+     imageUrl : zod.string()
 })
 
 

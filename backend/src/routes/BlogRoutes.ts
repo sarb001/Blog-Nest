@@ -58,6 +58,7 @@ BlogRouter.post('/createblog' , async(c) => {
 			userId: userid,
 			title : ParsedResponse?.data.title,
 			description : ParsedResponse?.data.description,
+			imageUrl : ParsedResponse?.data.imageUrl
 		}
 	});
 	return c.json({response})

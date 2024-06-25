@@ -5,7 +5,10 @@ import Home from "./components/Home"
 import Blogs from "./components/Blogs"
 import SingleBlog from "./components/SingleBlog"
 import CreateBlog from "./components/CreateBlog"
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from './components/ProtectedRoute'
+// import dotenv from 'dotenv' ;
+
+// dotenv.config();
 
 function App() {
 
@@ -33,6 +36,7 @@ function App() {
                 <SingleBlog /> 
               </ProtectedRoute>
             }>  </Route>
+         
          </Routes>
       </BrowserRouter>
       </>

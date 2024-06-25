@@ -12,6 +12,7 @@ const SingleBlog = () => {
         id: number ,
         title : string,
         description : string,
+        imageUrl :string,
         publishedDate : string,
         user : {
             name : string
@@ -98,6 +99,12 @@ const SingleBlog = () => {
                                         <h4> Posted on  {formatDate(singleblog?.publishedDate)} </h4>    
                                     </div>
                                 <h3> {singleblog?.description} </h3>    
+                            </div>
+                            <div>
+                                 <span>
+                                  <img src = {singleblog?.imageUrl} style = {{width:'35%',height:'15%',objectFit:'cover'}}
+                                   />
+                                 </span>
                             </div>
                             </>
                         )}
