@@ -4,6 +4,7 @@ import  { Link, useNavigate } from 'react-router-dom' ;
 import { SignInValidation  } from 'common-types-users' ;
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
+import Quote from './Quote';
 
 const SignIn = () => {
 
@@ -38,9 +39,8 @@ const SignIn = () => {
     }
 
   return (
-    <div style = {{margin:'5%',width:'30%'}}>
-
-        <div style = {{display:'flex' ,flexDirection:'column',justifyContent:'space-between',padding:'14% 6%' ,backgroundColor:'lightgrey' , alignItems:'center' }}>
+    <div className='grid grid-cols-2' >
+        <div style = {{display:'flex' ,flexDirection:'column',justifyContent:'space-between', alignItems:'center' }}>
             <div>  Login Now </div>
 
             <div style = {{marginTop:'1%'}}>
@@ -81,6 +81,10 @@ const SignIn = () => {
                     </button>
             </div>
 
+        </div>
+
+        <div>
+            <Quote />
         </div>
 
     </div>
