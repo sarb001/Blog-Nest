@@ -6,9 +6,11 @@ const Home = () => {
     <>
       <div style = {{margin:'1% 5%'}}>
             <h2> Welcome to WriteWay </h2>
-            <button>
-              <Link to = "/blogs">  Explore Blogs </Link>
-            </button>
+            <div className="bg-red-500">
+              <button>
+                <Link to = "/blogs">  Explore Blogs </Link>
+              </button>
+            </div>
       </div> 
     </>
   )
