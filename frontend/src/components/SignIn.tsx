@@ -40,17 +40,27 @@ const SignIn = () => {
 
   return (
     <div className='grid grid-cols-2' >
-        <div style = {{display:'flex' ,flexDirection:'column',justifyContent:'space-between', alignItems:'center' }}>
-            <div>  Login Now </div>
 
-            <div style = {{marginTop:'1%'}}>
-                    <span> Create New Account  </span>
-                    <Link to = "/signup"> Signup  </Link>
-            </div>
+    <div className='flex flex-col justify-center px-36'>
 
-            <div style = {{marginTop:'2%'}}>
-                <div  style = {{margin:'2% 0%'}} >  
-                    <LabelInputs label = "email" placeholder = "amandeep@gmail.com" 
+        <div>
+            <div className='font-bold text-3xl'> Welcome to WriteWay! </div>
+
+            <div className='font-bold text-3xl mt-2'> Create an account  </div>
+               
+                <div  className = 'font-medium text-[14px] mt-4 text-slate-500'>
+                    <span> Don't have an account ? </span>
+                    <span>
+                        <Link to = "/signup"> Sign Up </Link>
+                    </span>
+                </div>
+                
+        </div>
+
+
+         <div className='py-4'>
+                <div>  
+                    <LabelInputs label = "Email" placeholder = "amandeep@gmail.com" 
                     value = {postinputs.email}  onChange = {(e) => {
                         setpostinputs(c => ({
                             ...c,
@@ -59,8 +69,8 @@ const SignIn = () => {
                     }}  /> 
                 </div>
 
-                <div  style = {{margin:'2% 0%'}}>  
-                    <LabelInputs label = "password" placeholder = "amandeep"  
+                <div className='pt-4'>  
+                    <LabelInputs label = "Password" placeholder = "amandeep"  
                     value = {postinputs.password} onChange = {(e) => {
                         setpostinputs(c => ({
                             ...c,
@@ -69,19 +79,20 @@ const SignIn = () => {
                     }}  />  
                 </div>
 
+         </div>
+
+        <div>
+            <div className='py-4'>
+                 <button className='py-1.5 rounded-lg  w-full bg-black text-white px-4' onClick={loginhandler}> Login Now </button>
             </div>
 
-            <div style = {{marginTop:'3%'}}>
-                    <button style = {{padding:'1% 1%'}} onClick={loginhandler}> Login Now </button>
-            </div>
-
-            <div style = {{marginTop:'3%'}}>
-                    <button style = {{padding:'1% 1%'}} onClick={Guestcredentials}> 
-                        Guest Credentials 
-                    </button>
+            <div className='py-4'>
+                <button className='py-1.5 rounded-lg w-full bg-black text-white px-4'  onClick={Guestcredentials}>   Guest Credentials </button>
             </div>
 
         </div>
+
+    </div>
 
         <div>
             <Quote />
@@ -100,11 +111,16 @@ type Label = {
 
 const  LabelInputs = ({label, placeholder ,value , onChange} : Label) => {
     return (
-        <>
-         <label> {label} </label>
-         <input type = "text" placeholder = {placeholder}  value = {value}
-         onChange = {onChange}  />
-        </>
+        <div>
+            <div>  <label> {label} </label>  </div>
+
+        <div>
+            <input
+            className='p-2 w-full bg-slate-200 rounded-lg border-black focus:border-2'
+            type = "text" placeholder = {placeholder}  value = {value}
+            onChange = {onChange}  />
+        </div>
+        </div>
     )
 }
 
