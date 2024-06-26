@@ -39,64 +39,66 @@ const SignIn = () => {
     }
 
   return (
-    <div className='grid grid-cols-2' >
+    <div className='grid  grid-cols-1 lg:grid-cols-2' >
 
-    <div className='flex flex-col justify-center px-36'>
+            <div className='flex flex-col justify-center items-center px-6 h-screen lg:px-36'>
 
-        <div>
-            <div className='font-bold text-3xl'> Welcome to WriteWay! </div>
+                <div className='flex flex-col justify-center'>
 
-            <div className='font-bold text-3xl mt-2'> Create an account  </div>
-               
-                <div  className = 'font-medium text-[14px] mt-4 text-slate-500'>
-                    <span> Don't have an account ? </span>
-                    <span>
-                        <Link to = "/signup"> Sign Up </Link>
-                    </span>
-                </div>
-                
-        </div>
+                    <div>
+                        <div className='font-bold text-3xl'> Welcome to WriteWay! </div>
 
+                        <div className='font-bold text-3xl mt-2'> Create an account  </div>
+                        
+                            <div  className = 'font-medium text-[14px] mt-4 text-slate-500'>
+                                <span> Don't have an account ? </span>
+                                <span>
+                                    <Link to = "/signup"> Sign Up </Link>
+                                </span>
+                            </div>
+                            
+                    </div>
 
-         <div className='py-4'>
-                <div>  
-                    <LabelInputs label = "Email" placeholder = "amandeep@gmail.com" 
-                    value = {postinputs.email}  onChange = {(e) => {
-                        setpostinputs(c => ({
-                            ...c,
-                            email :e.target.value
-                        }))
-                    }}  /> 
-                </div>
+                    <div className='py-4'>
+                            <div>  
+                                <LabelInputs label = "Email" placeholder = "amandeep@gmail.com" 
+                                value = {postinputs.email}  onChange = {(e) => {
+                                    setpostinputs(c => ({
+                                        ...c,
+                                        email :e.target.value
+                                    }))
+                                }}  /> 
+                            </div>
 
-                <div className='pt-4'>  
-                    <LabelInputs label = "Password" placeholder = "amandeep"  
-                    value = {postinputs.password} onChange = {(e) => {
-                        setpostinputs(c => ({
-                            ...c,
-                            password :e.target.value
-                        }))
-                    }}  />  
-                </div>
+                            <div className='pt-4'>  
+                                <LabelInputs label = "Password" placeholder = "amandeep"  
+                                value = {postinputs.password} onChange = {(e) => {
+                                    setpostinputs(c => ({
+                                        ...c,
+                                        password :e.target.value
+                                    }))
+                                }}  />  
+                            </div>
 
-         </div>
+                    </div>
 
-        <div>
-            <div className='py-4'>
-                 <button className='py-1.5 rounded-lg  w-full bg-black text-white px-4' onClick={loginhandler}> Login Now </button>
+                    <div>
+                        <div className='py-4'>
+                            <button className='py-1.5 rounded-lg  w-full bg-black text-white px-4' onClick={loginhandler}> Login Now </button>
+                        </div>
+
+                        <div className='py-4'>
+                            <button className='py-1.5 rounded-lg w-full bg-black text-white px-4'  onClick={Guestcredentials}>   Guest Credentials </button>
+                        </div>
+
+                    </div>
+                    </div>
+
             </div>
 
-            <div className='py-4'>
-                <button className='py-1.5 rounded-lg w-full bg-black text-white px-4'  onClick={Guestcredentials}>   Guest Credentials </button>
+            <div className='lg:block hidden'>
+                <Quote />
             </div>
-
-        </div>
-
-    </div>
-
-        <div>
-            <Quote />
-        </div>
 
     </div>
   )

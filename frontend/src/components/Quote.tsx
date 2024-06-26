@@ -2,7 +2,7 @@
 
 const Quote = () => {
   return (
-    <div className="bg-slate-200 flex flex-col h-full w-full pt-56 pb-52 px-16 ">
+    <div className="bg-slate-200 flex flex-col h-screen w-full pt-56 pb-52 px-16 ">
 
         <div className="font-bold text-3xl"> 
               The customer service I recieved was exceptional. The support team went above and beyond to address my concerns.

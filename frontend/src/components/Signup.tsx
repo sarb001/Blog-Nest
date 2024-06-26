@@ -3,6 +3,7 @@ import  { Link, useNavigate } from 'react-router-dom' ;
 import { SignupInput  } from 'common-types-users' ;
 import axios from 'axios' ;
 import { BACKEND_URL } from '../config';
+import Quote from './Quote';
 
 
 const Signup = () => {
@@ -36,58 +37,81 @@ const Signup = () => {
 
     
   return (
-    <div style = {{margin:'5%',width:'30%'}}>
-     <div style = {{display:'flex' ,flexDirection:'column',justifyContent:'space-between',padding:'14% 6%' ,backgroundColor:'lightgrey' , alignItems:'center' }}>
+    <div className='grid  grid-cols-1 lg:grid-cols-2' >
 
-          <div> Create an Account  </div>
+         <div className='flex flex-col justify-center items-center px-6 h-screen lg:px-36'>
+                <div className='flex flex-col justify-center'>
 
-          <div style = {{marginTop:'1%'}}>
-                <span> Already have an Account? </span>
-                <Link to = "/signin"> Login  </Link>
-          </div>
+                    <div>
+               
+                    <div>
+                        <div className='font-bold text-3xl'> Welcome to WriteWay! </div>
 
-          <div style = {{marginTop:'2%'}}>
+                        <div className='font-bold text-3xl mt-2'> Create an account  </div>
+                        
+                            <div  className = 'font-medium text-[14px] mt-4 text-slate-500'>
+                                <span> Already have an account ? </span>
+                                <span>
+                                    <Link to = "/signin"> Sign In </Link>
+                                </span>
+                            </div>
+                            
+                    </div>
 
-              <div style = {{margin:'2% 0%'}}>  
-                <LabelInputs  label = "name" placeholder = "Amandeep singh" 
-                value = {postinputs.name} onChange = {(e) => {
-                    setpostinputs({
-                        ...postinputs,
-                        name : e.target.value 
-                    })
-                }}   />  
-              </div>
+                    <div className='py-4'>
 
-              <div style = {{margin:'2% 0%'}}>  
-                 <LabelInputs label = "email" placeholder = "amandeep@gmail.com" 
-                 value = {postinputs.email}  onChange = {(e) => {
-                    setpostinputs(c => ({
-                        ...c,
-                        email :e.target.value
-                    }))
-                }}  /> 
-              </div>
+                        <div>  
+                        <LabelInputs  label = "Name" placeholder = "Amandeep singh" 
+                        value = {postinputs.name} onChange = {(e) => {
+                            setpostinputs({
+                                ...postinputs,
+                                name : e.target.value 
+                            })
+                        }}   />  
+                        </div>
 
-             <div style = {{margin:'2% 0%'}}>  
-                <LabelInputs label = "password" placeholder = "amandeep"  
-                value = {postinputs.password} onChange = {(e) => {
-                    setpostinputs(c => ({
-                        ...c,
-                        password :e.target.value
-                    }))
-                }}  />  
-             </div>
+                        <div>  
+                            <LabelInputs label = "Email" placeholder = "amandeep@gmail.com" 
+                            value = {postinputs.email}  onChange = {(e) => {
+                                setpostinputs(c => ({
+                                    ...c,
+                                    email :e.target.value
+                                }))
+                            }}  /> 
+                        </div>
 
-          </div>
+                        <div>  
+                            <LabelInputs label = "Password" placeholder = "amandeep"  
+                            value = {postinputs.password} onChange = {(e) => {
+                                setpostinputs(c => ({
+                                    ...c,
+                                    password :e.target.value
+                                }))
+                            }}  />  
+                        </div>
 
-          <div style = {{marginTop:'3%'}}>
-                <button style = {{padding:'3% 1%'}} onClick={signuphandler}> Create Account  </button>
-          </div>
+                    </div>
 
-     </div>
+                    <div>
+                        <div className='py-4'>
+                            <button className='py-1.5 rounded-lg  w-full bg-black text-white px-4' onClick={signuphandler}> SignUp </button>
+                        </div>
+                    </div>
+                             
+                </div>
+
+            </div>
+
+         </div>
+
+         <div className='lg:block hidden'>
+            <Quote />
+        </div>
     </div>
   )
 }
+
+
 
 type Label = {
     label : string ,
@@ -101,6 +125,7 @@ const  LabelInputs = ({label, placeholder ,value , onChange} : Label) => {
         <>
          <label> {label} </label>
          <input type = "text" placeholder = {placeholder}  value = {value}
+          className='p-2 w-full bg-slate-200 rounded-lg border-black focus:border-2'
          onChange = {onChange}  />
         </>
     )
