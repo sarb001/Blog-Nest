@@ -6,8 +6,8 @@ import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { storage } from "../Firebaseconfig";
 import { v4 } from  'uuid' ;
+import { storage } from '../firebaseconfig';
 
 const CreateBlog = () => {
 
@@ -22,7 +22,7 @@ const CreateBlog = () => {
      const handlepost = async() => {
 
         if(img == null) return ;
-        const spaceRef =  ref(storage,`/mainimages/${v4()}`);
+        const spaceRef =  ref(storage ,`/mainimages/${v4()}`);
         console.log('ref is =',spaceRef);
 
         await uploadBytes(spaceRef,img).then((c) => {

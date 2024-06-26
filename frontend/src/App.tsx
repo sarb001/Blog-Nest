@@ -4,19 +4,20 @@ import SignIn from "./components/SignIn"
 import Home from "./components/Home"
 import Blogs from "./components/Blogs"
 import SingleBlog from "./components/SingleBlog"
-import CreateBlog from "./components/CreateBlog"
 import ProtectedRoute from './components/ProtectedRoute'
-// import dotenv from 'dotenv' ;
+import CreateBlog from "./components/CreateBlog"
 
-// dotenv.config();
 
 function App() {
-
+  
   return (
       <>
       <BrowserRouter>
          <Routes>
-           <Route path="/" element = { <ProtectedRoute> <Home /> </ProtectedRoute>}> 
+           <Route path="/" element = {
+             <ProtectedRoute>
+             <Home /> 
+            </ProtectedRoute>}> 
            </Route>
            <Route path="/signup" element = {<Signup />}>  </Route>
            <Route path="/signin" element = {<SignIn />}>  </Route>
@@ -28,7 +29,7 @@ function App() {
             }>  </Route>
            <Route path="/create" element = { 
              <ProtectedRoute>
-                <CreateBlog />
+                <CreateBlog  />
              </ProtectedRoute>
             }>  </Route>
            <Route path="blogs/:id" element = {

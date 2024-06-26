@@ -1,6 +1,6 @@
-// import React, { useState } from 'react'
-// import { storage } from '../Firebaseconfig';
+// import React, { useState } from 'react';
 // import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+// import { storage } from '../firebaseconfig';
 
 // const Profile = () => {
 
@@ -48,3 +48,4 @@
 // }
 
 // export default Profile
+
