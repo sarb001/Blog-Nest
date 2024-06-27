@@ -65,19 +65,19 @@ const CreateBlog = () => {
   return (
     <>
      <Header />
-        <div className="mx-12 my-16 grid grid-rows-[0.8fr,1.2fr] gap-2"> 
+        <div className="mx-12 lg:mx-36 mt-4 flex flex-col justify-center h-screen gap-14 "> 
 
-            <div>
-                    <div className="flex justify-center">
+            <div className="flex flex-col items-center">
+                    <div>
                     <img src = {showimg} className ="w-32 h-32 rounded-full"  alt="Rounded avatar" />
                     </div>
 
-                    <div className="mt-5 flex justify-center">
+                    <div className="mt-5">
                         <input  type = "file"   onChange={(e) => changenow(e)} />
                     </div>
             </div>  
 
-            <div>
+            <div className="mt-5">
                     <div>
                         <input type="text"  className ="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                         placeholder="Enter Title..." 
@@ -98,12 +98,13 @@ const CreateBlog = () => {
                                 />
                     </div>
                     
-                <div style = {{margin:'3%'}}>
+                <div className="mt-6">
                     <button type = "submit" className ="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" 
                     onClick={handlepost} >
                         {loading ?  "Publishing...." : " Publish Post" } 
                     </button>
                 </div>
+
             </div>
 
         </div>
