@@ -5,6 +5,7 @@ import { BACKEND_URL } from '../config';
 import { useEffect, useState } from 'react';
 import WriteComment from './WriteComment';
 import Header from './Header';
+import { AiFillDelete } from "react-icons/ai";
 
 const SingleBlog = () => {
 
@@ -86,58 +87,81 @@ const SingleBlog = () => {
   return (
         <>
           <Header /> 
-            <div style = {{padding:'4% 5%' ,display:'grid',gridTemplateColumns:'1fr 1fr'}}>
-                
             <div>
-                    <div key = {id}>
-                    <h4> 
-                        {singleblog && (
-                            <>
-                                <div key = {singleblog?.id}>
-                                    <div>
-                                        <h1>  {singleblog?.title} </h1>    
-                                        <h4> Posted on  {formatDate(singleblog?.publishedDate)} </h4>    
+
+                {singleblog && (
+                    <div key = {id} className='flex flex-col gap-4 mx-8 my-6'>
+
+                            <div className='grid grid-cols-2 justify-between'>
+                                    <div className='text-2xl font-semibold'>  {singleblog?.title} </div> 
+                                    <div className='flex justify-end'>  
+                                        { id && <button className='p-2 bg-slate-500 rounded-lg'
+                                        onClick={() => DeleteBlog(id)}> <AiFillDelete color='red'
+                                        className='text-2xl'
+                                        /> 
+                                        </button> }
                                     </div>
-                                <h3> {singleblog?.description} </h3>    
                             </div>
-                            <div>
-                                 <span>
-                                  <img src = {singleblog?.imageUrl} style = {{width:'35%',height:'15%',objectFit:'cover'}}
-                                   />
-                                 </span>
-                            </div>
-                            </>
-                        )}
-                    </h4>
 
-                    </div>
-
-                    <div>
-                    { id && <WriteComment  postid = {id} />}
-                    </div>
-                    <div>
-                        <h3> All Comments Here-  </h3>
-                        <div>
-                            {allcomment  && allcomment.map(i => (
-                                <div key= {i?.id}>
-                                    <h2> {i?.content} -- {i?.user?.name} 
-                                    </h2>
+                            <div className='flex flex-row items-center'>
+                                <div className ="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-400 rounded-full dark:bg-gray-600">
+                                        <div className ="font-medium text-black dark:text-gray-300">
+                                        JL 
+                                        </div>
                                 </div>
-                            ))}
-                        </div>
-                    </div>
-            </div>
+                                <div className='pl-4 text-xl font-bold'>  {singleblog?.user?.name} </div>
+                                <div className='pl-4'> 
+                                    {formatDate(singleblog?.publishedDate)} 
+                                </div>
+                            </div>
+                        
+                            <div className='mt-5'>
+                                <div> 
+                                <img src = {singleblog?.imageUrl} 
+                                style = {{width:'100%',height:'15%',objectFit:'cover'}} /> 
+                                </div>
+                            </div>
 
-            <div>
-                <h3> Author </h3>
-                <h3> {singleblog?.user?.name} </h3> 
-                <h4> Master of mirth , funniest person in kingdom  </h4>
-                { id && <button 
-                style = {{padding:'3%'}}
-                onClick={() => DeleteBlog(id)}> Delete </button> }
-            </div>
+                            <div>
+                                <div className='text-xl font-medium'> {singleblog?.description} </div>
+                            </div>
 
-            
+                            <div>
+                                Comments 
+                            </div>
+
+                   </div>
+
+                )}
+
+
+
+
+
+                {/* <div>
+
+            {/*  Write comments  */}
+
+                        {/* <div>
+                        { id && <WriteComment  postid = {id} />}
+                        </div> */}
+
+            {/* fetch all */}
+{/* 
+                        <div>
+                            <h3> All Comments Here-  </h3>
+                            <div>
+                                {allcomment  && allcomment.map(i => (
+                                    <div key= {i?.id}>
+                                        <h2> {i?.content} -- {i?.user?.name} 
+                                        </h2>
+                                    </div>
+                                ))}
+                            </div>
+                        </div> */}
+
+                {/* </div> */}
+
             </div>
        </>
   )

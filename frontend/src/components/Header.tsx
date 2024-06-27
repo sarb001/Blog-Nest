@@ -39,21 +39,21 @@ const Header = () => {
 
 
   return (
-        <div className = "grid grid-cols-2 justify-between py-2 px-1 bg-neutral-100 " >
+        <div className = "grid grid-cols-[0.8fr,1.2fr] md:grid-cols-2 justify-between items-center py-2 px-1 bg-neutral-100 " >
                 {session ? <>
-                    <div className="font-bold text-3xl px-4">
+                    <div className="text-xl  font-bold md:text-3xl px-4">
                       <Link to = "/blogs"> WriteWay! </Link>
                      </div>
-                </> :
-                <div>
-                           <Link to = "/signup"> Kagaaz </Link>
-                </div>
+                    </> :
+                    <div>
+                            <Link to = "/signup"> Kagaaz </Link>
+                    </div>
                 }
 
 
                 {session ? 
                 <>
-                <div style = {{display:'flex',justifyContent: 'space-evenly' }}>
+                <div className="pt-12 flex justify-evenly">
                 
                     <div>
 
