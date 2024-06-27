@@ -8,13 +8,14 @@ import Header from "./Header";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from  'uuid' ;
 import { storage } from '../firebaseconfig';
+import { FaImage } from "react-icons/fa";
 
 const CreateBlog = () => {
 
     const [title,setTitle] = useState('');
     const [description,setDescription] = useState('');
     const [img,setImg] = useState(null);
-    const [showimg,setShowimg]= useState('/src/assets/default.png')
+    const [showimg,setShowimg]= useState('/src/assets/default-img.jpg')
     const navigate = useNavigate();
 
     const [loading,setloading] = useState(false);
@@ -55,8 +56,8 @@ const CreateBlog = () => {
 
 
      const changenow = (e:any) => {
-    setImg(e.target.files[0]);
-    setShowimg(URL.createObjectURL(e.target.files[0]));
+        setImg(e.target.files[0]);
+        setShowimg(URL.createObjectURL(e.target.files[0]));
      }
 
 
@@ -64,51 +65,47 @@ const CreateBlog = () => {
   return (
     <>
      <Header />
-        <div style = {{margin:'3%'}}> 
-            <div>
-                <label> Enter Title  </label>
-                <input type = "text" placeholder="Enter Text..." 
-                value = {title} onChange={(e) => setTitle(e.target.value)}
-                />
-            </div>
+        <div className="mx-12 my-16 grid grid-rows-[0.8fr,1.2fr] gap-2"> 
 
             <div>
-                <ReactQuill 
-                    modules = {module}
-                    theme="snow" 
-                    value={!description ? '<br>' : `<p>${description}</p>`} 
-                    className="custom-quill"
-                    onChange={(val: string) => {
-                        setDescription(val?.replace(/<\/?p[^>]*>/g, '').replace('<br>', ''));
-                    }}
-                    placeholder="Write an article....."
-                    />
-            </div>
-            
+                    <div className="flex justify-center">
+                    <img src = {showimg} className ="w-32 h-32 rounded-full"  alt="Rounded avatar" />
+                    </div>
+
+                    <div className="mt-5 flex justify-center">
+                        <input  type = "file"   onChange={(e) => changenow(e)} />
+                    </div>
+            </div>  
+
             <div>
-        <div style = {{margin :'4%'}}>
-                <label> Upload Image </label>
-                <input  type = "file" 
-                 onChange={(e) => changenow(e)}
-                />
-        </div>
-
-        <div>
-            <h3> Image is = </h3>
-        <div>
-            <img src = {showimg}
-            style = {{width:'15%',height:'10%',objectFit:'cover'}} />
-        </div>
-        </div>
-    </div>  
-
-            <div style = {{margin:'3%'}}>
-                <button style = {{padding:'1% 3%'}} 
-                type = "submit"  
-                 onClick={handlepost}>
-                    {loading ?  "Publishing...." : " Publish Post" } 
-                </button>
+                    <div>
+                        <input type="text"  className ="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                        placeholder="Enter Title..." 
+                        value = {title} onChange={(e) => setTitle(e.target.value)}
+                        required />
+                    </div>
+                
+                    <div className="mt-5">
+                            <ReactQuill 
+                                modules = {module}
+                                theme="snow" 
+                                value={!description ? '<br>' : `<p>${description}</p>`} 
+                                className="custom-quill"
+                                onChange={(val: string) => {
+                                    setDescription(val?.replace(/<\/?p[^>]*>/g, '').replace('<br>', ''));
+                                }}
+                                placeholder="Write  Description"
+                                />
+                    </div>
+                    
+                <div style = {{margin:'3%'}}>
+                    <button type = "submit" className ="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" 
+                    onClick={handlepost} >
+                        {loading ?  "Publishing...." : " Publish Post" } 
+                    </button>
+                </div>
             </div>
+
         </div>
     </>
   )

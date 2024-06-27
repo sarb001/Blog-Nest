@@ -29,8 +29,8 @@ const BlogCard = ({id,title,description, publishedDate , user} : Blog) => {
               </div>
 
               <div className="flex flex-col ml-5">
-                <div className="text-2xl font-semibold"> {user?.name} </div>
-                <div> {FormatDate(publishedDate)} </div>
+                <div className="text-xl font-semibold"> {user?.name} </div>
+                <div className="text-xs"> {FormatDate(publishedDate)} </div>
               </div>
                 
             </div>
