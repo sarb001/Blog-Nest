@@ -4,6 +4,7 @@ import BlogCard from './BlogCard';
 import { useEffect, useState } from 'react';
 import { BACKEND_URL } from '../config';
 import Header from './Header';
+import Loader from './Loader';
 
 const Blogs = () => {
 
@@ -31,8 +32,16 @@ const Blogs = () => {
       
    },[])
 
-   if(loading)return <h1> Loading..... </h1>
-
+   if(loading) return (
+    <div className='flex flex-col gap-2 justify-center'>
+      <Loader />
+      <Loader />
+      <Loader />
+      <Loader />
+      <Loader />
+    </div>
+   )
+ 
   interface Blog  {
      id:number,
      title : string,
