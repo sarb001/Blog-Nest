@@ -46,12 +46,11 @@ const Blogs = () => {
 
   return (
     <>
-     <Header /> 
-    <div style = {{margin:'2%',display:'flex'}}>
-      <h3> All Blogs  </h3>
-      <div style = {{margin:'3%'}}>
+     {/* <Header />  */}
+    <div className='m-9 md:m-28'>
+      <div className='flex flex-wrap items-center flex-col gap-9'>
          {blog && blog?.map((i:Blog) => (
-            <div key = {i?.id}>
+            <div key = {i?.id} className='p-3 bg-gray-300 md:mx-6 w-[800px]' >
               <BlogCard 
                 id = {i?.id}
                 title = {i?.title}  
