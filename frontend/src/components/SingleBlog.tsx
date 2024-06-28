@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import WriteComment from './WriteComment';
 import Header from './Header';
 import { AiFillDelete } from "react-icons/ai";
+import Loader from './Loader';
 
 const SingleBlog = () => {
 
@@ -28,12 +29,9 @@ const SingleBlog = () => {
         }
       }
 
-      interface Allcomments {
-         allcomm : Comments[]
-      }
 
     const [singleblog,setsingleblog] = useState<SingleBlog | null>(null);
-
+    const [loading,setloading] = useState(true);
     const [allcomment,setAllComments] = useState<Comments[]>([]);
 
     const { id } = useParams<string>();
@@ -50,6 +48,7 @@ const SingleBlog = () => {
             });
             console.log('res =',res.data.blog);
             setsingleblog(res?.data?.blog);
+            setloading(false);
         }
         FetchsingleBlog();
     },[id]);
@@ -82,7 +81,12 @@ const SingleBlog = () => {
         }
         GetAllComments();
     },[])
-        
+
+    if(loading) return (
+        <div className='flex flex-col justify-center items-center'>
+          <Loader />
+        </div>
+    )
 
   return (
         <>
@@ -90,13 +94,14 @@ const SingleBlog = () => {
             <div>
 
                 {singleblog && (
-                    <div key = {id} className='flex flex-col gap-4 mx-8 my-6'>
+                    <div key = {id} className='flex flex-col gap-4 mx-8 my-6 lg:px-44 '>
 
-                            <div className='grid grid-cols-2 justify-between'>
-                                    <div className='text-2xl font-semibold'>  {singleblog?.title} </div> 
+                            <div className='grid grid-cols-[1.8fr,0.2fr] justify-between'>
+                                    <div className='text-2xl font-semibold lg:text-3xl'>  {singleblog?.title} </div> 
                                     <div className='flex justify-end'>  
-                                        { id && <button className='p-2 bg-slate-500 rounded-lg'
-                                        onClick={() => DeleteBlog(id)}> <AiFillDelete color='red'
+                                        { id && <button className='p-2 bg-slate-700  rounded-lg'
+                                        onClick={() => DeleteBlog(id)}> 
+                                        <AiFillDelete color='red'
                                         className='text-2xl'
                                         /> 
                                         </button> }
@@ -116,52 +121,47 @@ const SingleBlog = () => {
                             </div>
                         
                             <div className='mt-5'>
-                                <div> 
+                                <div className='md:flex md:items-center '> 
                                 <img src = {singleblog?.imageUrl} 
-                                style = {{width:'100%',height:'15%',objectFit:'cover'}} /> 
+                                className='w-full md:w-3/4 h-full lg:w-3/12  object-cover' /> 
                                 </div>
                             </div>
 
-                            <div>
+                            <div className='my-5'>
                                 <div className='text-xl font-medium'> {singleblog?.description} </div>
                             </div>
 
+                            <div className='my-2  md:mr-48'>
+                                 <div className='text-2xl font-bold'> Comments </div>
+                                { id && <WriteComment  postid = {id} />}
+                            </div>
+
                             <div>
-                                Comments 
+                                {allcomment  && allcomment.map(i => (
+                            <div>
+            
+                                    <div className='flex flex-row items-center'>
+                                        <div className ="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-400 rounded-full dark:bg-gray-600">
+                                            <div className ="font-medium text-black dark:text-gray-300">
+                                                        {i?.user?.name[0].toUpperCase()} 
+                                            </div>
+                                        </div>
+                                        
+                                        <div className='px-2 text-[18px] font-bold '>  {i?.user?.name} </div> 
+                                    </div>
+
+                                    <div key= {i?.id} className='flex flex-col gap-5 my-3'>
+                                                <div>  {i?.content} </div> 
+                                    </div>
+                                 
+                               </div>
+                                ))}
                             </div>
 
                    </div>
 
                 )}
-
-
-
-
-
-                {/* <div>
-
-            {/*  Write comments  */}
-
-                        {/* <div>
-                        { id && <WriteComment  postid = {id} />}
-                        </div> */}
-
-            {/* fetch all */}
-{/* 
-                        <div>
-                            <h3> All Comments Here-  </h3>
-                            <div>
-                                {allcomment  && allcomment.map(i => (
-                                    <div key= {i?.id}>
-                                        <h2> {i?.content} -- {i?.user?.name} 
-                                        </h2>
-                                    </div>
-                                ))}
-                            </div>
-                        </div> */}
-
-                {/* </div> */}
-
+                
             </div>
        </>
   )

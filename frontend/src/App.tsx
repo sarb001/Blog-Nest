@@ -6,7 +6,7 @@ import Blogs from "./components/Blogs"
 import SingleBlog from "./components/SingleBlog"
 import ProtectedRoute from './components/ProtectedRoute'
 import CreateBlog from "./components/CreateBlog"
-
+import './App.css';
 
 function App() {
   

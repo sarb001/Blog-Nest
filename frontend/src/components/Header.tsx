@@ -53,7 +53,7 @@ const Header = () => {
 
                 {session ? 
                 <>
-                <div className="pt-12 flex justify-evenly">
+                <div className="pt-4 flex justify-evenly">
                 
                     <div>
 
