@@ -8,14 +8,12 @@ interface writecomment {
 
 
 const WriteComment = ({postid}:writecomment) => {
-     console.log('post id =',postid);
 
     const [newcomment,setnewcomment] = useState('');
 
     const handleComment = async(e:FormEvent<HTMLFormElement>) => {
-        // comment on specifc blog  
+      
         e.preventDefault();
-        console.log('new comment-',newcomment);
           const response =  await axios.post(`${BACKEND_URL}/api/v1/blog/comment/${postid}`,
              {  content : newcomment }, 
              {

@@ -10,8 +10,7 @@ const GetComments = () => {
                 headers : {
                     'Authorization' : localStorage.getItem('token')
                 }
-                });
-            console.log('res =',res.data);
+                });222
         }
         GetAllComments();
     },[])

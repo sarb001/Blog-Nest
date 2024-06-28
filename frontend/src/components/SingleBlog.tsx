@@ -46,7 +46,6 @@ const SingleBlog = () => {
                     'Authorization' : localStorage.getItem('token')
                 }
             });
-            console.log('res =',res.data.blog);
             setsingleblog(res?.data?.blog);
             setloading(false);
         }
@@ -55,13 +54,11 @@ const SingleBlog = () => {
 
     const DeleteBlog = async(id:string) => {
         try {
-            console.log('Specifc User id is=',id);
             const res =  await axios.delete(`${BACKEND_URL}/api/v1/blog/${id}`, {
                 headers : {
                     'Authorization' : localStorage.getItem('token')
                 }
             });
-            console.log('res =',res.data.blog);
             alert('Blog Deleted');
             navigate('/blogs');
         } catch (error) {
@@ -77,7 +74,6 @@ const SingleBlog = () => {
                 }
                 });
                 setAllComments(res.data.comment);
-            console.log(' All Commentss =',res.data.comment);
         }
         GetAllComments();
     },[])

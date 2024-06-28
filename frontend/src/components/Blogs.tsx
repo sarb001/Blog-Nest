@@ -16,16 +16,14 @@ const Blogs = () => {
         const headers = {
           'Authorization' : localStorage.getItem('token')
         }
-        console.log('heders =',headers);
         try {
         const res = await axios.get(`${BACKEND_URL}/api/v1/blog/bulk`,{
           headers
         });
-        console.log('res =',res.data.AllBlogs);
         setblog(res?.data?.AllBlogs)
         setloading(false);
         } catch (error) {
-          console.log('error is =',error);
+          console.log('erroris=',error);
        }
       }
       fetchall();

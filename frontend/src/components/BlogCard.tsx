@@ -11,10 +11,6 @@ interface Blog  {
 }
 
 
-//  avatar  | name | pub date 
-// title 
-// content sliced 
-
 const BlogCard = ({id,title,description, publishedDate , user} : Blog) => {
   return (
           

@@ -31,7 +31,6 @@ const Header = () => {
                     'Authorization' : localStorage.getItem('token')
                 }
             });
-            console.log('res profile =',res.data.mainuser);
             setuserProfile(res?.data.mainuser);
         }
         Profile();

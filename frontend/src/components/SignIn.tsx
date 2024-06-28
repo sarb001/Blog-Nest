@@ -16,11 +16,7 @@ const SignIn = () => {
     const navigate = useNavigate();
 
     const loginhandler = async() => {
-        console.log("inside login");
-        console.log('==',postinputs.email,postinputs.password);
-
         const res = await axios.post(`${BACKEND_URL}/api/v1/user/login` , postinputs);
-        console.log('res =',res);
 
         if(res.data.token){   
             localStorage.setItem('token',res.data.token);

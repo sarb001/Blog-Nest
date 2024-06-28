@@ -24,18 +24,9 @@ const CreateBlog = () => {
 
         if(img == null) return ;
         const spaceRef =  ref(storage ,`/mainimages/${v4()}`);
-        console.log('ref is =',spaceRef);
 
-        await uploadBytes(spaceRef,img).then((c) => {
-            console.log('file uploaded Done');
-        })
-
+        await uploadBytes(spaceRef,img);
         const imgurl = await getDownloadURL(spaceRef);
-
-            console.log('title===',title);
-            console.log('Desc =',description);
-            console.log('url to upload  =',imgurl);
-
             setloading(true);
             const res =  await axios.post(`${BACKEND_URL}/api/v1/blog/createblog`, {
                 title,
@@ -47,7 +38,6 @@ const CreateBlog = () => {
                 }
             });
             setloading(false);
-            console.log('res =',res.data);
             alert('Post Created');
             setTitle('');
             setDescription('');

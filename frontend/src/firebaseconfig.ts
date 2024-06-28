@@ -13,12 +13,6 @@ import { getStorage } from 'firebase/storage';
     appId: import.meta.env.VITE_APP_ID,
     measurementId: import.meta.env.VITE_MEASUREMENT_ID
   }
-  
-  console.log('firebaseconfig -  ',firebaseConfig);
-  
-  console.log('metaa ee',import.meta.env);
-
-
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);

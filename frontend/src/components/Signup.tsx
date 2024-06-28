@@ -25,7 +25,6 @@ const Signup = () => {
                 const res = await axios.post(`${BACKEND_URL}/api/v1/user/signup` , 
                     postinputs
                );
-               console.log('res= ',res);
                alert('Account Created');
                navigate('/signin')
             }
