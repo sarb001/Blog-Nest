@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import  { useEffect } from 'react'
 import axios from 'axios' ;
 import { BACKEND_URL } from '../config';
 
@@ -6,11 +6,11 @@ const GetComments = () => {
 
     useEffect(() => {
         async function GetAllComments(){
-            const res =  await axios.get(`${BACKEND_URL}/api/v1/blog`, {
+            await axios.get(`${BACKEND_URL}/api/v1/blog`, {
                 headers : {
                     'Authorization' : localStorage.getItem('token')
                 }
-                });222
+                });
         }
         GetAllComments();
     },[])

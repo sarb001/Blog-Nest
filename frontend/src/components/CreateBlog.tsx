@@ -8,7 +8,6 @@ import Header from "./Header";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from  'uuid' ;
 import { storage } from '../firebaseconfig';
-import { FaImage } from "react-icons/fa";
 
 const CreateBlog = () => {
 
@@ -28,7 +27,7 @@ const CreateBlog = () => {
         await uploadBytes(spaceRef,img);
         const imgurl = await getDownloadURL(spaceRef);
             setloading(true);
-            const res =  await axios.post(`${BACKEND_URL}/api/v1/blog/createblog`, {
+             await axios.post(`${BACKEND_URL}/api/v1/blog/createblog`, {
                 title,
                 description,
                  imageUrl : imgurl

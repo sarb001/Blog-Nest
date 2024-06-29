@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react"
+import {  FormEvent, useState } from "react"
 import { BACKEND_URL } from "../config";
 import axios from "axios";
 
@@ -14,7 +14,7 @@ const WriteComment = ({postid}:writecomment) => {
     const handleComment = async(e:FormEvent<HTMLFormElement>) => {
       
         e.preventDefault();
-          const response =  await axios.post(`${BACKEND_URL}/api/v1/blog/comment/${postid}`,
+           await axios.post(`${BACKEND_URL}/api/v1/blog/comment/${postid}`,
              {  content : newcomment }, 
              {
               headers : {

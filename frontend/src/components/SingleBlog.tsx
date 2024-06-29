@@ -54,7 +54,7 @@ const SingleBlog = () => {
 
     const DeleteBlog = async(id:string) => {
         try {
-            const res =  await axios.delete(`${BACKEND_URL}/api/v1/blog/${id}`, {
+             await axios.delete(`${BACKEND_URL}/api/v1/blog/${id}`, {
                 headers : {
                     'Authorization' : localStorage.getItem('token')
                 }

@@ -22,7 +22,7 @@ const Signup = () => {
                 alert(' Enter Data in All Fields ');
             }
             else{
-                const res = await axios.post(`${BACKEND_URL}/api/v1/user/signup` , 
+                await axios.post(`${BACKEND_URL}/api/v1/user/signup` , 
                     postinputs
                );
                alert('Account Created');
