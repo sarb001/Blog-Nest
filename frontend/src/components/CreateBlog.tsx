@@ -14,7 +14,7 @@ const CreateBlog = () => {
     const [title,setTitle] = useState('');
     const [description,setDescription] = useState('');
     const [img,setImg] = useState(null);
-    const [showimg,setShowimg]= useState('/src/assets/default-img.jpg')
+    const [showimg,setShowimg]= useState('/assets/default-img.jpg');
     const navigate = useNavigate();
 
     const [loading,setloading] = useState(false);
