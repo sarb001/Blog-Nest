@@ -95,12 +95,11 @@ const SingleBlog = () => {
                             <div className='grid grid-cols-[1.8fr,0.2fr] justify-between'>
                                     <div className='text-2xl font-semibold lg:text-3xl'>  {singleblog?.title}
                                      </div> 
+
                                     <div className='flex justify-end'>  
                                         { id && <button className='p-2 bg-slate-700  rounded-lg'
                                         onClick={() => DeleteBlog(id)}> 
-                                        <AiFillDelete color='red'
-                                        className='text-2xl'
-                                        /> 
+                                        <AiFillDelete color='red'  className='text-2xl' /> 
                                         </button> }
                                     </div>
                             </div>
@@ -111,7 +110,11 @@ const SingleBlog = () => {
                                         JL 
                                         </div>
                                 </div>
-                                <div className='pl-4 text-xl font-bold'>  {singleblog?.user?.name} </div>
+
+                                <div className='pl-4 text-xl font-bold'>  
+                                    {singleblog?.user?.name} 
+                                </div>
+
                                 <div className='pl-4'> 
                                     {formatDate(singleblog?.publishedDate)} 
                                 </div>
@@ -127,7 +130,7 @@ const SingleBlog = () => {
                             <div className='my-5'>
                                 <div className='text-xl font-medium'>
                                     {singleblog?.description}
-                              </div>
+                               </div>
                             </div>
 
                             <div className='my-2  md:mr-48'>
