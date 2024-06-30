@@ -62,12 +62,13 @@ const CreateBlog = () => {
                     </div>
 
                     <div className="mt-5">
-                        <input  type = "file"   onChange={(e) => changenow(e)} />
+                        <input  type = "file"   onChange={(e) => changenow(e)} required />
                     </div>
             </div>  
 
             <div className="mt-5">
                     <div>
+                        <label> Enter Title </label>
                         <input type="text"  className ="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                         placeholder="Enter Title..." 
                         value = {title} onChange={(e) => setTitle(e.target.value)}
@@ -75,6 +76,7 @@ const CreateBlog = () => {
                     </div>
                 
                     <div className="mt-5">
+                     <label> Enter Description </label>
                             <ReactQuill 
                                 modules = {module}
                                 theme="snow" 
@@ -83,8 +85,7 @@ const CreateBlog = () => {
                                 onChange={(val: string) => {
                                     setDescription(val?.replace(/<\/?p[^>]*>/g, '').replace('<br>', ''));
                                 }}
-                                placeholder="Write  Description"
-                                />
+                                placeholder="Write  Description" />
                     </div>
                     
                 <div className="mt-6">

@@ -93,7 +93,8 @@ const SingleBlog = () => {
                     <div key = {id} className='flex flex-col gap-4 mx-8 my-6 lg:px-44 '>
 
                             <div className='grid grid-cols-[1.8fr,0.2fr] justify-between'>
-                                    <div className='text-2xl font-semibold lg:text-3xl'>  {singleblog?.title} </div> 
+                                    <div className='text-2xl font-semibold lg:text-3xl'>  {singleblog?.title}
+                                     </div> 
                                     <div className='flex justify-end'>  
                                         { id && <button className='p-2 bg-slate-700  rounded-lg'
                                         onClick={() => DeleteBlog(id)}> 
@@ -119,12 +120,14 @@ const SingleBlog = () => {
                             <div className='mt-5'>
                                 <div className='md:flex md:items-center '> 
                                 <img src = {singleblog?.imageUrl} 
-                                className='w-full md:w-3/4 h-full lg:w-3/12  object-cover' /> 
+                                className='w-full md:w-3/4 h-full lg:w-3/12 object-cover' /> 
                                 </div>
                             </div>
 
                             <div className='my-5'>
-                                <div className='text-xl font-medium'> {singleblog?.description} </div>
+                                <div className='text-xl font-medium'>
+                                    {singleblog?.description}
+                              </div>
                             </div>
 
                             <div className='my-2  md:mr-48'>
@@ -143,8 +146,9 @@ const SingleBlog = () => {
                                             </div>
                                         </div>
                                         
-                                        <div className='px-2 text-[18px] font-bold '>  {i?.user?.name} </div> 
-                                    </div>
+                                        <div className='px-2 text-[18px] font-bold '> 
+                                         {i?.user?.name} </div> 
+                                        </div>
 
                                     <div key= {i?.id} className='flex flex-col gap-5 my-3'>
                                                 <div>  {i?.content} </div> 
