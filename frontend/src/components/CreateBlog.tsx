@@ -19,28 +19,31 @@ const CreateBlog = () => {
 
     const [loading,setloading] = useState(false);
 
-     const handlepost = async() => {
+     const handlepost = async() => 
+        {
+            console.log('title=',title);
+            console.log('Description is=',description);
 
-        if(img == null) return ;
-        const spaceRef =  ref(storage ,`/mainimages/${v4()}`);
+            if(img == null) return ;
+            const spaceRef =  ref(storage ,`/mainimages/${v4()}`);
 
-        await uploadBytes(spaceRef,img);
-        const imgurl = await getDownloadURL(spaceRef);
-            setloading(true);
-             await axios.post(`${BACKEND_URL}/api/v1/blog/createblog`, {
-                title,
-                description,
-                 imageUrl : imgurl
-            },{
-                headers : {
-                    'Authorization' : localStorage.getItem('token')
-                }
-            });
-            setloading(false);
-            alert('Post Created');
-            setTitle('');
-            setDescription('');
-            navigate('/blogs');
+            await uploadBytes(spaceRef,img);
+            const imgurl = await getDownloadURL(spaceRef);
+                setloading(true);
+                await axios.post(`${BACKEND_URL}/api/v1/blog/createblog`, {
+                    title,
+                    description,
+                    imageUrl : imgurl
+                },{
+                    headers : {
+                        'Authorization' : localStorage.getItem('token')
+                    }
+                });
+                setloading(false);
+                alert('Post Created');
+                setTitle('');
+                setDescription('');
+                navigate('/blogs');
      }
 
 
@@ -48,7 +51,6 @@ const CreateBlog = () => {
         setImg(e.target.files[0]);
         setShowimg(URL.createObjectURL(e.target.files[0]));
      }
-
 
 
   return (
@@ -80,7 +82,7 @@ const CreateBlog = () => {
                             <ReactQuill 
                                 modules = {module}
                                 theme="snow" 
-                                value={!description ? '<br>' : `<p>${description}</p>`} 
+                                value={description || ''} 
                                 className="custom-quill"
                                 onChange={(val: string) => {
                                     setDescription(val?.replace(/<\/?p[^>]*>/g, '').replace('<br>', ''));
@@ -126,5 +128,18 @@ var toolBarOptions = [
 const module =  {
     toolbar : toolBarOptions
 }
+
+// export const getPlainTextFromHTML = (html: string): string => {
+//     return html.replace(
+//       /<(\w+)\s*[^>]*>|<\/(\w+)\s*>|<(\w+)\s*\/>/gi,
+//       function (match, p1, p2) {
+//         if (p2 === p1 && p2 !== "br") {
+//           return match.startsWith("</") ? " " : "";
+//         } else {
+//           return match.startsWith("</") ? " " : p1 === "br" ? "" : "";
+//         }
+//       }
+//     );
+//   }
 
 export default CreateBlog
