@@ -34,8 +34,6 @@ const SingleBlog = () => {
     const [loading,setloading] = useState(true);
     const [allcomment,setAllComments] = useState<Comments[]>([]);
 
-    const [DelBlog,setDelBlog] = useState('');
-
     const { id } = useParams<string>();
     console.log('id isss -',typeof(id));
 
