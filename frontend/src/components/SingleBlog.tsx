@@ -34,6 +34,8 @@ const SingleBlog = () => {
     const [loading,setloading] = useState(true);
     const [allcomment,setAllComments] = useState<Comments[]>([]);
 
+    const [DelBlog,setDelBlog] = useState('');
+
     const { id } = useParams<string>();
     console.log('id isss -',typeof(id));
 
@@ -52,14 +54,17 @@ const SingleBlog = () => {
         FetchsingleBlog();
     },[id]);
 
+
     const DeleteBlog = async(id:string) => {
         try {
-             await axios.delete(`${BACKEND_URL}/api/v1/blog/${id}`, {
+            const delblog =  await axios.delete(`${BACKEND_URL}/api/v1/blog/${id}`, {
                 headers : {
                     'Authorization' : localStorage.getItem('token')
                 }
             });
-            alert('Blog Deleted');
+
+            console.log('delblog =',delblog);
+            alert(delblog?.data?.message);
             navigate('/blogs');
         } catch (error) {
             alert('Not Autorized to Delete')
