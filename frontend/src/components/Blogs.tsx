@@ -20,7 +20,8 @@ const Blogs = () => {
         const res = await axios.get(`${BACKEND_URL}/api/v1/blog/bulk`,{
           headers
         });
-        setblog(res?.data?.AllBlogs)
+        setblog(res?.data?.AllBlogs);
+        console.log('res all =',res);
         setloading(false);
         } catch (error) {
           console.log('erroris=',error);
@@ -45,6 +46,7 @@ const Blogs = () => {
      title : string,
      description : string,
      publishedDate: string,
+     imageUrl? : string,
      user : {
       name :string
      }
@@ -64,6 +66,7 @@ const Blogs = () => {
                 description = {i?.description}
                 publishedDate = {i?.publishedDate}
                 user = {i?.user}
+                imageUrl = {i?.imageUrl}
               />
             </div>
          ))}
