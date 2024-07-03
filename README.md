@@ -78,12 +78,12 @@ JWT_SECRET=your_jwt_secret
 ## Deployment 
 
 **Backend**
-Deploy the backend using Cloudflare Workers. Follow the Cloudflare Workers documentation for detailed deployment instructions.
+ - Deploy the backend using Cloudflare Workers. Follow the Cloudflare Workers documentation for detailed deployment instructions.
 
 **Frontend**
-Deploy the frontend on Vercel. Follow the Vercel documentation for detailed deployment instructions.
+ - Deploy the frontend on Vercel. Follow the Vercel documentation for detailed deployment instructions.
 
 **Contributing**
-Contributions are welcome! Please fork the repository and submit a pull request.
+ - Contributions are welcome! Please fork the repository and submit a pull request.
  -----------|-----------
 
