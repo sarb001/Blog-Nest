@@ -13,6 +13,7 @@ This Application provides features like  Medium App and  developed as part of Co
 - Skeleton Loading for a smoother user experience
 - Connection Pooling with Prisma
 - Type Inference and Validation with Zod
+- Firebase for Storing Images URL
 
 ## TechStack
 
@@ -21,6 +22,7 @@ This Application provides features like  Medium App and  developed as part of Co
 - **React** -  A JavaScript library for building user interfaces.
 - **Vite** -  A build tool that significantly improves the development experience 
 - **Skeleton Loading** - For enhanced UX during data fetches.
+- **Firebase** - For Storing Images url 
 
 **Backend**
 
