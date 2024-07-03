@@ -6,14 +6,14 @@
 
 
 
-This Application provides features like  Medium App and  developed as part of Cohort 2.0 by Harkirat. The project is built from scratch using a modern tech stack and deployed on Vercel and Cloudflare Workers.xs
+This Application provides features like  Medium App and  developed as part of Cohort 2.0 by Harkirat. The project is built from scratch using a modern tech stack and deployed on Vercel and Cloudflare Workers
 
 ## Features 
 - User Authentication (JWT)
 - Skeleton Loading for a smoother user experience
 - Connection Pooling with Prisma
 - Type Inference and Validation with Zod
-- Firebase for Storing Images URL
+- Directly Storing Images URL 
 
 ## TechStack
 
